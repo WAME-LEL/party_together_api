@@ -22,8 +22,8 @@ public class Member {
 
     private String password;
 
-    @OneToMany(mappedBy = "member")
-    private List<Game> gameList;
+//    @OneToMany(mappedBy = "member")
+//    private List<Game> gameList;
 
 
 }

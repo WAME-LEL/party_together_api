@@ -14,8 +14,8 @@ spring: #띄어쓰기 없음
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://34.31.36.42:3306/party_together?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 362405
+    username: team
+    password: team
   jpa:
     show-sql: true
     hibernate:

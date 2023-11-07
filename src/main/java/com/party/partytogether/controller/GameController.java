@@ -1,29 +1,25 @@
 package com.party.partytogether.controller;
 
-
 import com.party.partytogether.domain.Game;
 import com.party.partytogether.service.GameService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
-public class HomeController {
+public class GameController {
     private final GameService gameService;
 
-    @GetMapping("/")
-    public String home(Model model){
+    @PostMapping("/game/regist")
+    public String gameRegist(@RequestParam ("gameTitle") String gameTitle){
+        Game game = Game.createGame(gameTitle);
 
-        List<Game> gameList = gameService.findAll();
-        model.addAttribute("gameList", gameList);
+        gameService.saveGame(game);
 
-        return "addGames";
+        return "redirect:/";
     }
 
-
 }
-
