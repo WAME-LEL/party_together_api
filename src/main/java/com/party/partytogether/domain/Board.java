@@ -8,21 +8,24 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
-public class Game {
+public class Board {
     @Id
     @GeneratedValue
-    @Column(name = "games_id")
+    @Column(name = "board_id")
     private Long id;
 
     private String title;
+    private String content;
+    private LocalDateTime time;
 
-    public static Game createGame(String title){
-        Game game = new Game();
-        game.setTitle(title);
 
-        return game;
-    }
+    private Member member;
+
+
+
 }

@@ -15,8 +15,17 @@ public class GameService {
 
     private final GameRepository gameRepository;
 
-    public void saveGame(Game game){
+    public void gameRegist(Game game){
         gameRepository.save(game);
+    }
+
+    public Game findOne(Long gameId){
+        Game game = gameRepository.findOne(gameId);
+        return game;
+    }
+
+    public void delete(Long gameId){
+        gameRepository.delete(gameId);
     }
 
     public List<Game> findAll(){
