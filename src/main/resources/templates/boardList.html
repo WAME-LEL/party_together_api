@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div class="container">
+    <div>
+        <div>
+            <a href="/board/add">board</a>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>게시글 ID</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>오픈카톡 링크</th>
+                <th>등록 시간</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board : ${boardList}">
+                <td th:text="${board.id}"></td>
+                <td th:text="${board.title}"></td>
+                <td th:text="${board.content}"></td>
+                <td th:text="${board.opentalk}"></td>
+                <td th:text="${board.time}"></td>
+
+                <td>
+                    <!--          <a th:if="${item.status.name() == 'ORDER'}" href="#"-->
+                    <!--             th:href="'javascript:cancel('+${item.id}+')'"-->
+                    <!--             class="btn btn-danger">CANCEL</a>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+<script>
+    function cancel(id) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/orders/" + id + "/cancel");
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+</html>

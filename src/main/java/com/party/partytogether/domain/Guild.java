@@ -23,4 +23,6 @@ public class Guild {
     @JoinColumn(name = "game_id")
     private Game game;
 
+
+
 }

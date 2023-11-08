@@ -23,7 +23,7 @@ public class Member {
     private String password;
 
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany
     private List<Game> gameList;
 
     @OneToOne
