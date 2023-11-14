@@ -34,7 +34,7 @@ public class MemberController {
     }
 
     @PostMapping("/member/regist")
-    public String registMember(@RequestParam ("nickname") String nickname,
+    public String memberRegist(@RequestParam ("nickname") String nickname,
                                @RequestParam ("username") String username,
                                @RequestParam ("password") String password){
 
@@ -45,7 +45,7 @@ public class MemberController {
     }
 
     @PostMapping("member/{id}/delete")
-    public String deleteMember(@PathVariable("id") Long id){
+    public String memberDelete(@PathVariable("id") Long id){
         memberService.memberDelete(id);
 
         return "redirect:/member";

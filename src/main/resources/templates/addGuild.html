@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guild Registration Form</title>
+</head>
+<body>
+
+<form id="guildForm" action="/guild/regist" method="post">
+    <label for="guildName">길드 명:</label><br>
+    <input type="text" id="guildName" name="guildName" required><br>
+    <label for="guildIntroduce">길드 소개:</label><br>
+    <input type="text" id="guildIntroduce" name="guildIntroduce" required><br>
+<!--    <label for="guildGame">하는 게임:</label><br>-->
+<!--    <input type="text" id="guildGame" name="guildGame" required><br>-->
+
+    <input type="submit" value="저장">
+</form>
+
+
+</body>
+</html>

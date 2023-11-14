@@ -23,6 +23,10 @@ public class GuildService {
 
     }
 
+    public void delete(Long id ){
+        guildRepository.delete(id);
+    }
+
     public Guild findOne(Long id){
         return guildRepository.findOne(id);
     }

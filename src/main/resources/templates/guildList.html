@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div class="container">
+    <div>
+        <div>
+            <a href="/guild/add">guild add</a>
+        </div>
+
+<!--        <div>-->
+<!--            <form action="/board" method="get">-->
+<!--                <label for="keyword">단어:</label><br>-->
+<!--                <input type="text" id="keyword" name="keyword"><br>-->
+<!--                <input type="submit" value="검색">-->
+<!--            </form>-->
+<!--        </div>-->
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>길드 ID</th>
+                <th>길드 명</th>
+                <th>길드 소개</th>
+                <th>하는 게임</th>
+                <th>길드 포인트</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="guild : ${guildList}">
+                <td th:text="${guild.id}"></td>
+                <td th:text="${guild.name}"></td>
+                <td th:text="${guild.introduce}"></td>
+                <td th:text="${guild.game}"></td>
+                <td th:text="${guild.point}"></td>
+
+                <td>
+                    <form action="/post/delete" th:action="@{/guild/{id}/delete (id = ${guild.id})}" method="post">
+                        <div>
+                            <button type="submit" class="btn btn-primary">delete</button>
+                        </div>
+                    </form>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+
+</html>

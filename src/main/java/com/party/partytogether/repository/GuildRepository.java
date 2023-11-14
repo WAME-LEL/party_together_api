@@ -17,6 +17,9 @@ public class GuildRepository {
         em.persist(guild);
     }
 
+    public void delete(Long id){
+        em.remove(em.find(Guild.class, id));
+    }
     public Guild findOne(Long id){
         return em.find(Guild.class, id);
     }
