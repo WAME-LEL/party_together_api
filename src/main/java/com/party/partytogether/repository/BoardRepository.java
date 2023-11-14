@@ -28,4 +28,11 @@ public class BoardRepository {
     public List<Board> findAll(){
         return em.createQuery("select b from Board b", Board.class).getResultList();
     }
+
+    public List<Board> findSearchWord(String keyword){
+        return em.createQuery("select b from Board b WHERE b.type LIKE :keyword", Board.class)
+                .setParameter("keyword", keyword)
+                .getResultList();
+
+    }
 }

@@ -19,8 +19,14 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/board")
-    public String Board(Model model){
-        List<Board> boardList = boardService.findAll();
+    public String boardList(@RequestParam(value = "keyword", required = false) String keyword, Model model){
+        List<Board> boardList;
+        if(keyword != null && !keyword.isEmpty()){
+            boardList = boardService.findSearchWord(keyword);
+        }
+        else{
+            boardList = boardService.findAll();
+        }
 
         model.addAttribute("boardList", boardList);
 
@@ -28,16 +34,17 @@ public class BoardController {
     }
 
     @GetMapping("/board/add")
-    public String addBoard(){
+    public String boardForm(){
         return "addBoard";
     }
 
     @PostMapping("/board/regist")
     public String registBoard(@RequestParam ("boardTitle") String boardTitle,
                               @RequestParam ("boardContent") String boardContent,
-                              @RequestParam ("opentalk") String opentalk){
+                              @RequestParam ("opentalk") String opentalk,
+                              @RequestParam ("type") String type){
 
-        boardService.post(boardTitle, boardContent, opentalk);
+        boardService.post(boardTitle, boardContent, opentalk, type);
 
         return "redirect:/board";
     }
@@ -48,5 +55,6 @@ public class BoardController {
 
         return "redirect:/board";
     }
+
 
 }

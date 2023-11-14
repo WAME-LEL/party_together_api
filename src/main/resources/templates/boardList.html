@@ -5,17 +5,25 @@
 <div class="container">
     <div>
         <div>
-            <a href="/board/add">board</a>
+            <a href="/board/add">board add</a>
+        </div>
+
+        <div>
+            <form action="/board" method="get">
+                <label for="keyword">단어:</label><br>
+                <input type="text" id="keyword" name="keyword"><br>
+                <input type="submit" value="검색">
+            </form>
         </div>
 
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>#</th>
                 <th>게시글 ID</th>
                 <th>제목</th>
                 <th>내용</th>
                 <th>오픈카톡 링크</th>
+                <th>타입</th>
                 <th>등록 시간</th>
 
             </tr>
@@ -26,12 +34,16 @@
                 <td th:text="${board.title}"></td>
                 <td th:text="${board.content}"></td>
                 <td th:text="${board.opentalk}"></td>
+                <td th:text="${board.type}"></td>
                 <td th:text="${board.time}"></td>
 
                 <td>
-                    <!--          <a th:if="${item.status.name() == 'ORDER'}" href="#"-->
-                    <!--             th:href="'javascript:cancel('+${item.id}+')'"-->
-                    <!--             class="btn btn-danger">CANCEL</a>-->
+                    <form action="/post/delete" th:action="@{/board/{id}/delete (id = ${board.id})}" method="post">
+                        <div>
+                            <button type="submit" class="btn btn-primary">delete</button>
+                        </div>
+                    </form>
+
                 </td>
             </tr>
             </tbody>
@@ -39,13 +51,5 @@
     </div>
 </div> <!-- /container -->
 </body>
-<script>
-    function cancel(id) {
-        var form = document.createElement("form");
-        form.setAttribute("method", "post");
-        form.setAttribute("action", "/orders/" + id + "/cancel");
-        document.body.appendChild(form);
-        form.submit();
-    }
-</script>
+
 </html>

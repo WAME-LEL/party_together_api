@@ -26,8 +26,19 @@ public class Member {
     @OneToMany
     private List<Game> gameList;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "guild_id")
     private Guild guild;
+
+    //== 생성 메서드 ==//
+    public static Member createMember(String nickname, String username, String password){
+        Member member = new Member();
+        member.setNickname(nickname);
+        member.setUsername(username);
+        member.setPassword(password);
+
+        return member;
+    }
 
 
 }

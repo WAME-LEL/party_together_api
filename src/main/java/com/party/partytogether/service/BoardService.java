@@ -16,8 +16,8 @@ public class BoardService {
     private final BoardRepository boardRepository;
 
 
-    public void post(String title, String content, String opentalk){
-        Board board = Board.createBoard(title, content, opentalk);
+    public void post(String title, String content, String opentalk, String type){
+        Board board = Board.createBoard(title, content, opentalk, type);
 
         boardRepository.save(board);
     }
@@ -32,6 +32,10 @@ public class BoardService {
 
     public List<Board> findAll(){
         return boardRepository.findAll();
+    }
+
+    public List<Board> findSearchWord(String keyword){
+        return boardRepository.findSearchWord(keyword);
     }
 
 }

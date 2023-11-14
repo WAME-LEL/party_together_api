@@ -20,8 +20,7 @@ public class GameService {
     }
 
     public Game findOne(Long gameId){
-        Game game = gameRepository.findOne(gameId);
-        return game;
+        return gameRepository.findOne(gameId);
     }
 
     public void delete(Long gameId){
