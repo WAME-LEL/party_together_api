@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.party.partytogether.domain.Guild.createGuild;
 
 @Service
@@ -19,6 +21,14 @@ public class GuildService {
         Guild guild = createGuild(name, introduce);
         guildRepository.save(guild);
 
+    }
+
+    public Guild findOne(Long id){
+        return guildRepository.findOne(id);
+    }
+
+    public List<Guild> findAll(){
+        return guildRepository.findAll();
     }
 
 
