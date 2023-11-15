@@ -16,11 +16,40 @@
     <a href="/member">member</a>
 </div>
 
+<div>
+    <a href="/guild">guild</a>
+</div>
+
 <form id="gameForm" action="/game/regist" method="post">
     <label for="gameTitle">게임 제목:</label><br>
     <input type="text" id="gameTitle" name="gameTitle" required><br>
     <input type="submit" value="저장">
 </form>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>게임 ID</th>
+        <th>제목</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="game : ${gameList}">
+        <td th:text="${game.id}"></td>
+        <td th:text="${game.title}"></td>
+
+        <td>
+            <form action="/post/delete" th:action="@{/game/{id}/delete (id = ${game.id})}" method="post">
+                <div>
+                    <button type="submit" class="btn btn-primary">delete</button>
+                </div>
+            </form>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 
 

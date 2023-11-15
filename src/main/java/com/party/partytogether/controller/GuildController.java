@@ -37,17 +37,18 @@ public class GuildController {
     public String guildDelete(@PathVariable ("guildId") Long guildId){
         guildService.delete(guildId);
 
-        return "redirect:/guildList";
+        return "redirect:/guild";
 
     }
 
-    @PostMapping("/guild/add")
+    @PostMapping("/guild/regist")
     public String guildRegist(@RequestParam("guildName") String guildName, @RequestParam("guildIntroduce") String guildIntroduce){
 
-        guildService.guildRegist(guildName, guildIntroduce);
+        guildService.guildRegist(guildName, guildIntroduce, 1L, 1L);
 
-        return "redirect:/guildList";
+        return "redirect:/guild";
     }
+
 
 
 }
