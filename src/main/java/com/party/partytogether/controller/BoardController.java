@@ -30,21 +30,23 @@ public class BoardController {
 
         model.addAttribute("boardList", boardList);
 
-        return "boardList";
+        return "board/boardList";
     }
 
     @GetMapping("/board/add")
     public String boardForm(){
-        return "addBoard";
+        return "board/addBoard";
     }
 
-    @PostMapping("/board/regist")
-    public String registBoard(@RequestParam ("boardTitle") String boardTitle,
-                              @RequestParam ("boardContent") String boardContent,
-                              @RequestParam ("opentalk") String opentalk,
-                              @RequestParam ("type") String type){
+    @PostMapping("/board/registration")
+    public String BoardRegistration(@RequestParam ("boardTitle") String boardTitle,
+                                    @RequestParam ("boardContent") String boardContent,
+                                    @RequestParam ("opentalk") String opentalk,
+                                    @RequestParam ("type") String type,
+                                    @RequestParam ("memberId") Long memberId
+    ){
 
-        boardService.post(boardTitle, boardContent, opentalk, type);
+        boardService.post(boardTitle, boardContent, opentalk, type, memberId);
 
         return "redirect:/board";
     }

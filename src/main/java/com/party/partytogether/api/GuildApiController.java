@@ -1,15 +1,17 @@
 package com.party.partytogether.api;
 
 
+import com.party.partytogether.controller.GuildController;
 import com.party.partytogether.domain.Game;
 import com.party.partytogether.domain.Guild;
 import com.party.partytogether.domain.Member;
 import com.party.partytogether.service.GuildService;
+import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,13 +22,60 @@ public class GuildApiController {
     private final GuildService guildService;
 
     @GetMapping("/api/guild")
+    public Result guildInfo(@RequestBody GuildListRequestDto request){
+        Guild guild = guildService.findOneJoinLeaderAndGame(request.guildId);
+        GuildDto guildDto = new GuildDto(guild);
+        return new Result(guildDto);
+    }
+
+    @GetMapping("/api/guilds")
     public Result guildList(){
         List<Guild> guildList = guildService.findAll();
-        List<GuildDto> collect = guildList.stream()
-                .map(g -> new GuildDto(g.getId(), g.getName(), g.getIntroduce(), g.getPoint(), g.getGame(), g.getMember()))
+        List<GuildListDto> collect = guildList.stream()
+                .map(g -> new GuildListDto(g.getName(), g.getGame(), g.getMember().size()))
                 .collect(Collectors.toList());
 
         return new Result(collect);
+    }
+
+    @GetMapping("/api/guild/members")
+    public Result memberList(@RequestBody MemberListRequestDto request){
+        List<Member> guildMembers = guildService.findAllMembers(request.guildId);
+
+
+        return new Result(guildMembers);
+    }
+
+    @PostMapping("/api/guild/registration")
+    public ResponseEntity<?> guildRegistration(@RequestBody GuildRegistrationRequest request){
+
+        guildService.guildRegistration(request.guildName, request.guildIntroduce, request.guildGame, request.guildLeader);
+
+        return ResponseEntity.ok("guild Registration successfully");
+    }
+
+    @Data
+    static class GuildRegistrationRequest{
+        private String guildName;
+        private String guildIntroduce;
+        private Long guildGame;
+        private Long guildLeader;
+    }
+
+    @Data
+    static class MemberListRequestDto{
+        private Long guildId;
+    }
+
+    @Data
+    static class GuildListRequestDto{
+        private Long guildId;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class GuildDto{
+        private Guild guild;
     }
 
 
@@ -38,14 +87,22 @@ public class GuildApiController {
 
     @Data
     @AllArgsConstructor
-    static class GuildDto{
-        private Long id;
-        private String name;
-        private String introduce;
-        private int point;
+    static class GuildListDto{
+        private String guildName;
         private Game game;
-        private List<Member> member;
+        private int memberCount;
     }
+
+//    @Data
+//    @AllArgsConstructor
+//    static class GuildDto{
+//        private Long id;
+//        private String name;
+//        private String introduce;
+//        private int point;
+//        private Game game;
+//        private List<Member> member;
+//    }
 
 }
 

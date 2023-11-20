@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guild Registration Form</title>
+</head>
+<body>
+
+<form id="guildJoin" action="/member/guild/join" method="post">
+  <label for="guildId">길드 ID:</label><br>
+  <input type="text" id="guildId" name="guildId" required><br>
+  <label for="memberId">멤버 ID:</label><br>
+  <input type="text" id="memberId" name="memberId" required><br>
+
+  <input type="submit" value="저장">
+</form>
+
+
+</body>
+</html>

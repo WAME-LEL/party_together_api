@@ -24,13 +24,13 @@ public class MemberController {
         List<Member> memberList = memberService.findAll();
         model.addAttribute("memberList", memberList);
 
-        return "memberList";
+        return "member/memberList";
     }
 
     @GetMapping("/member/add")
     public String memberForm(){
 
-        return "addMember";
+        return "member/addMember";
     }
 
     @PostMapping("/member/regist")
@@ -38,17 +38,25 @@ public class MemberController {
                                @RequestParam ("username") String username,
                                @RequestParam ("password") String password){
 
-        memberService.memberRegist(nickname, username, password);
+        memberService.memberRegistration(nickname, username, password);
 
         return "redirect:/member";
 
     }
 
-    @PostMapping("member/{id}/delete")
+    @PostMapping("/member/{id}/delete")
     public String memberDelete(@PathVariable("id") Long id){
         memberService.memberDelete(id);
 
         return "redirect:/member";
+    }
+
+    @PostMapping("/member/guild/join")
+    public String guildJoin(@RequestParam ("guildId") Long guildId,
+                            @RequestParam ("memberId") Long memberId){
+        memberService.guildJoin(memberId, guildId);
+
+        return "redirect:/guild";
     }
 
 

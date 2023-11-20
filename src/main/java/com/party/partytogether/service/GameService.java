@@ -15,7 +15,7 @@ public class GameService {
 
     private final GameRepository gameRepository;
 
-    public void gameRegist(Game game){
+    public void gameRegistration(Game game){
         gameRepository.save(game);
     }
 

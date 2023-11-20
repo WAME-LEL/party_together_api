@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Guild {
 
     private int point;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
 
@@ -31,8 +32,8 @@ public class Guild {
     @JoinColumn(name = "leader_id")
     private Member leader;
 
-    @OneToMany(mappedBy = "guild", cascade = CascadeType.ALL)
-    private List<Member> member;
+    @OneToMany(mappedBy = "guild")
+    private List<Member> member = new ArrayList<>();
 
     //== 생성 메서드==//
     public static Guild createGuild(String name, String introduce, Game game, Member member){

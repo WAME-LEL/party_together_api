@@ -2,7 +2,9 @@ package com.party.partytogether.service;
 
 
 import com.party.partytogether.domain.Board;
+import com.party.partytogether.domain.Member;
 import com.party.partytogether.repository.BoardRepository;
+import com.party.partytogether.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +16,11 @@ import java.util.List;
 @Transactional
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
-
-    public void post(String title, String content, String opentalk, String type){
-        Board board = Board.createBoard(title, content, opentalk, type);
+    public void post(String title, String content, String opentalk, String type, Long memberId){
+        Member member = memberRepository.findOne(memberId);
+        Board board = Board.createBoard(title, content, opentalk, type, member);
 
         boardRepository.save(board);
     }

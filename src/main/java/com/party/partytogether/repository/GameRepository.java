@@ -17,6 +17,7 @@ public class GameRepository {
         em.persist(game);
     }
 
+
     public void delete(Long gameId){
         Game game = findOne(gameId);
         em.remove(game);

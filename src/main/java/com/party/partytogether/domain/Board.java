@@ -34,13 +34,14 @@ public class Board {
     private Member member;
 
     //==생성 메서드==//
-    public static Board createBoard(String title, String content, String opentalk, String type){
+    public static Board createBoard(String title, String content, String opentalk, String type, Member member){
         Board board = new Board();
         board.setTitle(title);
         board.setContent(content);
         board.setOpentalk(opentalk);
         board.setType(type);
         board.setTime(LocalDateTime.now());
+        board.setMember(member);
 
         return board;
     }

@@ -8,6 +8,9 @@
 <body>
 
 <div>
+    <a href="/">home</a>
+</div>
+<div>
     <a href="/member/add">member regist</a>
 </div>
 
@@ -31,8 +34,17 @@
                 <td th:text="${member.nickname}"></td>
                 <td th:text="${member.username}"></td>
                 <td th:text="${member.password}"></td>
-                <td th:text="${member.gameList}"></td>
+                <td th:text="${member.getMemberGames()}"></td>
                 <td th:text="${member.guild}"></td>
+
+                <td>
+                    <form action="/member/delete" th:action="@{/member/{id}/delete (id = ${member.id})}" method="post">
+                        <div>
+                            <button type="submit" class="btn btn-primary">delete</button>
+                        </div>
+                    </form>
+
+                </td>
             </tr>
             </tbody>
         </table>

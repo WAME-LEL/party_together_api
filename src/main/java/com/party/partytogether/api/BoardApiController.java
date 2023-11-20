@@ -7,6 +7,7 @@ import com.party.partytogether.service.BoardService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -42,6 +43,13 @@ public class BoardApiController {
         return new Result(collect);
     }
 
+    @PostMapping("/api/board/save")
+    public ResponseEntity<?> boardSave(@RequestBody BoardSaveRequest request){
+        boardService.post(request.title, request.content, request.opentalk, request.type, request.memberId);
+
+        return ResponseEntity.ok("Board save successfully");
+    }
+
     @Data
     @AllArgsConstructor
     static class Result<T>{
@@ -64,6 +72,15 @@ public class BoardApiController {
     @Data
     static class BoardListRequest{
         private String keyword;
+    }
+
+    @Data
+    static class BoardSaveRequest{
+        private Long memberId;
+        private String type;
+        private String title;
+        private String content;
+        private String opentalk;
     }
 }
 

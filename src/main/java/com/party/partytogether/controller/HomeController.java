@@ -24,13 +24,13 @@ public class HomeController {
         List<Game> gameList = gameService.findAll();
         model.addAttribute("gameList", gameList);
 
-        return "addGames";
+        return "game/addGames";
     }
     @PostMapping("/game/regist")
     public String gameRegist(@RequestParam("gameTitle") String gameTitle){
         Game game = Game.createGame(gameTitle);
 
-        gameService.gameRegist(game);
+        gameService.gameRegistration(game);
 
         return "redirect:/";
     }
