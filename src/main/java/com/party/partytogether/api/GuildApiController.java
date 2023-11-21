@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8081")
 public class GuildApiController {
     private final GuildService guildService;
 

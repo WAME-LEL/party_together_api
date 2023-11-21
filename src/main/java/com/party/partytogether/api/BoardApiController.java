@@ -4,6 +4,7 @@ package com.party.partytogether.api;
 import com.party.partytogether.domain.Board;
 import com.party.partytogether.domain.Member;
 import com.party.partytogether.service.BoardService;
+import com.party.partytogether.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8081")
 public class BoardApiController {
     private final BoardService boardService;
+    private final MemberService memberService;
 
     @GetMapping("/api/board")
     public Result boardList(@RequestBody Optional<BoardListRequest> request){
@@ -37,7 +40,7 @@ public class BoardApiController {
         }
 
         List<BoardDto> collect = boardList.stream()
-                .map(b -> new BoardDto(b.getType(), b.getTitle(), b.getContent(), b.getOpentalk(), b.getTime(), b.getMember()))
+                .map(b -> new BoardDto(b.getType(), b.getTitle(), b.getContent(), b.getOpentalk(), b.getTime(), b.getMember().getNickname()))
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -65,7 +68,7 @@ public class BoardApiController {
         private String opentalk;
         private LocalDateTime time;
 
-        private Member member;
+        private String nickname;
 
     }
 
