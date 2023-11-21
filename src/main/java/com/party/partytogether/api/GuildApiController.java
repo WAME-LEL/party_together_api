@@ -23,8 +23,8 @@ public class GuildApiController {
     private final GuildService guildService;
 
     @GetMapping("/api/guild")
-    public Result guildInfo(@RequestBody GuildListRequestDto request){
-        Guild guild = guildService.findOneJoinLeaderAndGame(request.guildId);
+    public Result guildInfo(@RequestParam Long guildId){
+        Guild guild = guildService.findOneJoinLeaderAndGame(guildId);
         GuildDto guildDto = new GuildDto(guild);
         return new Result(guildDto);
     }
@@ -40,8 +40,8 @@ public class GuildApiController {
     }
 
     @GetMapping("/api/guild/members")
-    public Result memberList(@RequestBody MemberListRequestDto request){
-        List<Member> guildMembers = guildService.findAllMembers(request.guildId);
+    public Result memberList(@RequestParam Long guildId){
+        List<Member> guildMembers = guildService.findAllMembers(guildId);
 
 
         return new Result(guildMembers);
