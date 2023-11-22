@@ -24,14 +24,8 @@ public class BoardApiController {
     private final MemberService memberService;
 
     @GetMapping("/api/board")
-    public Result boardList(@RequestBody Optional<BoardListRequest> request){
+    public Result boardList(@RequestParam(value = "keyword", required = false) String keyword){
         List<Board> boardList;
-        String keyword = null;
-        if(request.isPresent()){
-            keyword= request.get().getKeyword();
-            System.out.println("keyword = " + keyword);
-        }
-
         if(keyword != null && !keyword.isEmpty()){
             boardList = boardService.findSearchWord(keyword);
         }

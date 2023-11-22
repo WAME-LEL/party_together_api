@@ -63,6 +63,8 @@ public class MemberService {
         return memberRepository.signIn(username, password);
     }
 
+
+
     public Member findOne(Long id){
         return memberRepository.findOne(id);
     }
