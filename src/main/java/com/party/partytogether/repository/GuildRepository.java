@@ -23,8 +23,8 @@ public class GuildRepository {
         em.remove(em.find(Guild.class, id));
     }
 
-    public List<Guild> findAll(){
-        return em.createQuery("select g from Guild g", Guild.class)
+    public List<Guild> findAllDESC(){
+        return em.createQuery("select g from Guild g order by g.point desc", Guild.class)
                 .getResultList();
     }
 

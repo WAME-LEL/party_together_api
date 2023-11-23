@@ -43,8 +43,8 @@ public class GuildService {
         return guildRepository.findOne(id);
     }
 
-    public List<Guild> findAll(){
-        return guildRepository.findAll();
+    public List<Guild> findAllDESC(){
+        return guildRepository.findAllDESC();
     }
 
     public List<Tuple> findAllJoinLeaderAndGame(){
@@ -57,6 +57,12 @@ public class GuildService {
 
     public List<Member> findAllMembers(Long guildId){
         return guildRepository.findAllMembers(guildId);
+    }
+
+    @Transactional
+    public void updateGuildRanking(Long guildId, int ranking){
+        Guild guild = guildRepository.findOne(guildId);
+        guild.setRanking(ranking);
     }
 
 

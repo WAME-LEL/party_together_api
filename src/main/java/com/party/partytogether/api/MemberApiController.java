@@ -23,7 +23,7 @@ public class MemberApiController {
     private final MemberService memberService;
 
     @GetMapping("/api/member/signIn")
-    public ResponseEntity<?> signIn(@RequestBody SignInRequest request, BindingResult bindingResult){
+    public ResponseEntity<?> signIn(@ModelAttribute SignInRequest request, BindingResult bindingResult){
         Member member = memberService.singIn(request.username, request.password);
 
         if (bindingResult.hasErrors()){
@@ -52,7 +52,7 @@ public class MemberApiController {
     }
 
     @GetMapping("/api/member/game")
-    public Result playingGame(@RequestBody PlayingGameRequest request){
+    public Result playingGame(@ModelAttribute PlayingGameRequest request){
         List<MemberGame> gameList = memberService.playingGameList(request.memberId);
 
         return new Result(gameList);

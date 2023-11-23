@@ -1,12 +1,10 @@
 package com.party.partytogether.api;
 
 
-import com.party.partytogether.controller.GuildController;
 import com.party.partytogether.domain.Game;
 import com.party.partytogether.domain.Guild;
 import com.party.partytogether.domain.Member;
 import com.party.partytogether.service.GuildService;
-import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,25 +22,37 @@ public class GuildApiController {
     private final GuildService guildService;
 
     @GetMapping("/api/guild")
-    public Result guildInfo(@RequestParam Long guildId){
-        Guild guild = guildService.findOneJoinLeaderAndGame(guildId);
+    public Result guildInfo(@ModelAttribute GuildInfoRequest request){
+        List<Guild> guildList = guildService.findAllDESC();
+        AtomicInteger rankCounter = new AtomicInteger(1);
+        guildList.forEach(g -> {
+            guildService.updateGuildRanking(g.getId(), rankCounter.getAndIncrement());
+        });
+
+        Guild guild = guildService.findOneJoinLeaderAndGame(request.guildId);
         GuildDto guildDto = new GuildDto(guild);
         return new Result(guildDto);
     }
 
     @GetMapping("/api/guilds")
     public Result guildList(){
-        List<Guild> guildList = guildService.findAll();
+        List<Guild> guildList = guildService.findAllDESC();
+        AtomicInteger rankCounter = new AtomicInteger(1);
+
         List<GuildListDto> collect = guildList.stream()
-                .map(g -> new GuildListDto(g.getName(), g.getGame(), g.getMember().size()))
+                .map(g ->
+                {GuildListDto dto = new GuildListDto(g.getId() ,g.getName(), g.getPoint() ,rankCounter.get(), g.getGame(), g.getMember().size());
+                    guildService.updateGuildRanking(g.getId(), rankCounter.getAndIncrement());
+                    return dto;
+                })
                 .collect(Collectors.toList());
 
         return new Result(collect);
     }
 
     @GetMapping("/api/guild/members")
-    public Result memberList(@RequestParam Long guildId){
-        List<Member> guildMembers = guildService.findAllMembers(guildId);
+    public Result memberList(@ModelAttribute GuildListRequest request){
+        List<Member> guildMembers = guildService.findAllMembers(request.guildId);
 
 
         return new Result(guildMembers);
@@ -64,12 +75,17 @@ public class GuildApiController {
     }
 
     @Data
-    static class MemberListRequestDto{
+    static class MemberListRequest {
         private Long guildId;
     }
 
     @Data
-    static class GuildListRequestDto{
+    static class GuildListRequest {
+        private Long guildId;
+    }
+
+    @Data
+    static class GuildInfoRequest{
         private Long guildId;
     }
 
@@ -89,9 +105,13 @@ public class GuildApiController {
     @Data
     @AllArgsConstructor
     static class GuildListDto{
+        private Long guildId;
         private String guildName;
+        private int point;
+        private int guildRanking;
         private Game game;
         private int memberCount;
+
     }
 
 //    @Data

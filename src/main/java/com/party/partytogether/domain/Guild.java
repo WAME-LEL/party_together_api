@@ -24,9 +24,11 @@ public class Guild {
 
     private int point;
 
+    private int ranking;
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
+
 
     @OneToOne
     @JoinColumn(name = "leader_id")
