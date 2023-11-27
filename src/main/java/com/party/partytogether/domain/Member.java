@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+//회원 도메인
 @Entity
 @Getter
 @Setter
@@ -19,18 +20,17 @@ public class Member {
     private Long id;
 
     private String nickname;
-
     private String username;
-
     private String password;
 
     private String latitude;
-
     private String longitude;
 
+    //일대다 관계
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberGame> memberGames = new ArrayList<>();
 
+    //다대일 관계
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "guild_id")
@@ -47,8 +47,25 @@ public class Member {
     }
 
     //==연관 관계 메서드==//
+
+    //게임 추가
     public void addGame(MemberGame memberGame){
         memberGames.add(memberGame);
+    }
+
+    //멤버 끼리 거리 계산
+    public static Double calculateDistance(Double lat1, Double lon1, Double lat2, Double lon2) {
+        final double EARTH_RADIUS = 6371.0; // 지구 반경 (km)
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS * c; // 결과는 킬로미터 단위
     }
 
 

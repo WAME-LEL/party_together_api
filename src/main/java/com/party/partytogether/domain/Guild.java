@@ -8,6 +8,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//길드 도메인
 @Entity
 @Getter @Setter
 public class Guild {
@@ -23,17 +25,19 @@ public class Guild {
     private String introduce;
 
     private int point;
-
     private int ranking;
+
+    //다대일 관계
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
 
-
+    //일대일 관계
     @OneToOne
     @JoinColumn(name = "leader_id")
     private Member leader;
 
+    //일대다 관계
     @OneToMany(mappedBy = "guild")
     private List<Member> member = new ArrayList<>();
 

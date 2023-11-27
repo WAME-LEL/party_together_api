@@ -1,30 +1,30 @@
 package com.party.partytogether.repository;
 
-
 import com.party.partytogether.domain.MemberGame;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
 public class MemberGameRepository {
     private final EntityManager em;
 
+
+    //MemberGame 하나 조회
     public MemberGame findOne(Long memberGameId){
         return em.find(MemberGame.class, memberGameId);
     }
 
+    //MemberGame 전체 조회
     public List<MemberGame> findAll(){
         return em.createQuery("select mg from MemberGame mg", MemberGame.class).getResultList();
     }
 
+    //같은 게임을 하는 멤버와 게임 조회
     public List<Tuple> findAllSameMember(Long memberId){
         List<Tuple> results = em.createQuery(
                         "SELECT mg2.member.id, ga.id" +
@@ -38,8 +38,5 @@ public class MemberGameRepository {
 
         return results;
     }
-
-
-
 
 }

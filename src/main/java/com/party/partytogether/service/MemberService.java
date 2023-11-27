@@ -15,21 +15,26 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class MemberService {
     private final MemberRepository memberRepository;
     private final GuildRepository guildRepository;
 
+    //회원 등록
+    @Transactional
     public void memberRegistration(String nickname, String username, String password){
         Member member = Member.createMember(nickname, username, password);
         memberRepository.save(member);
     }
 
+    //회원 삭제
+    @Transactional
     public void memberDelete(Long id){
         memberRepository.delete(id);
     }
 
 
+    //하고 있는 게임 등록
     public void playingGameRegistration(Long memberId, List<Game> gameList){
         Member member = memberRepository.findOne(memberId);
 
@@ -39,12 +44,15 @@ public class MemberService {
         }
     }
 
+    //하고 있는 게임 조회
     public List<MemberGame> playingGameList(Long memberId){
         Member member = memberRepository.findOne(memberId);
 
         return member.getMemberGames();
     }
 
+    //길드 가입
+    @Transactional
     public void guildJoin(Long memberId, Long guildId){
         Member member = memberRepository.findOne(memberId);
         Guild guild = guildRepository.findOne(guildId);
@@ -52,6 +60,7 @@ public class MemberService {
         member.setGuild(guild);
     }
 
+    //회원 위치 설정
     public void memberLocation(Long memberId, String latitude, String longitude){
         Member member = memberRepository.findOne(memberId);
 
@@ -59,30 +68,17 @@ public class MemberService {
         member.setLongitude(longitude);
     }
 
-    public Double calculateDistance(Double lat1, Double lon1, Double lat2, Double lon2) {
-        final double EARTH_RADIUS = 6371.0; // 지구 반경 (km)
-
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lonDistance = Math.toRadians(lon2 - lon1);
-
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return EARTH_RADIUS * c; // 결과는 킬로미터 단위
-    }
-
+    //로그인
     public Member singIn(String username, String password){
         return memberRepository.signIn(username, password);
     }
 
-
-
+    //회원 하나 조회
     public Member findOne(Long id){
         return memberRepository.findOne(id);
     }
 
+    //회원 전체 조회
     public List<Member> findAll(){
         return memberRepository.findAll();
     }

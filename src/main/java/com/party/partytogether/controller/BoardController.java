@@ -18,6 +18,7 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
 
+    //게시판 타입에 따른 게시글 검색
     @GetMapping("/board")
     public String boardList(@RequestParam(value = "keyword", required = false) String keyword, Model model){
         List<Board> boardList;
@@ -33,11 +34,13 @@ public class BoardController {
         return "board/boardList";
     }
 
+    // 게시글 폼으로 이동
     @GetMapping("/board/add")
     public String boardForm(){
         return "board/addBoard";
     }
 
+    // 게시글 상세 조회
     @PostMapping("/board/registration")
     public String BoardRegistration(@RequestParam ("boardTitle") String boardTitle,
                                     @RequestParam ("boardContent") String boardContent,
@@ -51,12 +54,11 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    // 게시글 삭제
     @PostMapping("/board/{boardId}/delete")
     public String deleteBoard(@PathVariable ("boardId") Long boardId){
         boardService.delete(boardId);
 
         return "redirect:/board";
     }
-
-
 }

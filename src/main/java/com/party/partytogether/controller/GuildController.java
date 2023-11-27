@@ -23,21 +23,12 @@ import java.util.stream.Collectors;
 public class GuildController {
     private final GuildService guildService;
 
+    // 길드 리스트 조회
     @GetMapping("/guild")
     public String guildList(Model model){
-//        List<Guild> guildList = guildService.findAll();
         List<Tuple> guildList = guildService.findAllJoinLeaderAndGame();
 
-//        for (Tuple result : guildList) {
-//            Guild guild = result.get(0, Guild.class);
-//            Member member = result.get(1, Member.class);
-//            Game game = result.get(2, Game.class);
-//
-//            System.out.println("guild.getName() = " + guild.getName());
-//            System.out.println("member.getNickname() = " + member.getNickname());
-//            System.out.println("game.getTitle() = " + game.getTitle());
-//            // 여기서 guild와 member를 사용하여 필요한 작업 수행
-//        }
+        // 길드 리스트를 DTO로 변환
         List<GuildGameDto> collect = guildList.stream()
                 .map(d -> new GuildGameDto(d.get(0, Guild.class), d.get(1, Game.class)))
                 .collect(Collectors.toList());
@@ -47,27 +38,22 @@ public class GuildController {
 
         return "guild/guildList";
     }
+
+    //길드 가입 폼으로 이동
     @GetMapping("/guild/joinForm")
     public String guildJoinForm(){
 
         return "/guild/guildJoin";
     }
 
-
-
+    // 길드 등록 폼으로 이동
     @GetMapping("/guild/add")
     public String guildForm(){
         return "/guild/addGuild";
     }
 
-    @Data
-    @AllArgsConstructor
-    static class GuildGameDto{
-        private Guild guild;
-        private Game game;
-    }
 
-
+    //길드 삭제
     @PostMapping("/guild/{guildId}/delete")
     public String guildDelete(@PathVariable ("guildId") Long guildId){
         guildService.delete(guildId);
@@ -76,6 +62,7 @@ public class GuildController {
 
     }
 
+    // 길드 등록
     @PostMapping("/guild/regist")
     public String guildRegistration(
             @RequestParam("guildName") String guildName,
@@ -88,6 +75,14 @@ public class GuildController {
         return "redirect:/guild";
     }
 
+    //==DTO==//
+
+    @Data
+    @AllArgsConstructor
+    static class GuildGameDto{
+        private Guild guild;
+        private Game game;
+    }
 
 
 }

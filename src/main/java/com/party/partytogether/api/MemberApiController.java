@@ -22,10 +22,12 @@ import java.util.List;
 public class MemberApiController {
     private final MemberService memberService;
 
+    // 로그인
     @GetMapping("/api/member/signIn")
     public ResponseEntity<?> signIn(@ModelAttribute SignInRequest request, BindingResult bindingResult){
         Member member = memberService.singIn(request.username, request.password);
 
+        // 로그인 실패
         if (bindingResult.hasErrors()){
             return ResponseEntity.internalServerError().body("signIn failed");
         }
@@ -34,6 +36,7 @@ public class MemberApiController {
 
     }
 
+    // 회원가입
     @PostMapping("/api/member/signUp")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest request){
         memberService.memberRegistration(request.nickname, request.username, request.password);
@@ -41,8 +44,7 @@ public class MemberApiController {
         return ResponseEntity.ok("signUp successfully");
     }
 
-
-
+    // 길드 가입
     @PostMapping("/api/member/guild/join")
     public ResponseEntity<?> guildJoin(@RequestBody GuildJoinRequest request){
         memberService.guildJoin(request.memberId, request.guildId);
@@ -51,6 +53,7 @@ public class MemberApiController {
 
     }
 
+    //하고 있는 게임 조회
     @GetMapping("/api/member/game")
     public Result playingGame(@ModelAttribute PlayingGameRequest request){
         List<MemberGame> gameList = memberService.playingGameList(request.memberId);
@@ -58,6 +61,7 @@ public class MemberApiController {
         return new Result(gameList);
     }
 
+    //하고 있는 게임 등록
     @PostMapping("/api/member/game")
     public ResponseEntity<?> playingGameRegistration(@RequestBody GameRegistrationRequest request){
         memberService.playingGameRegistration(request.getMemberId(),request.getGameList());
@@ -66,6 +70,7 @@ public class MemberApiController {
         return ResponseEntity.ok("playing game registration successfully");
     }
 
+    //회원 위치 설정
     @PostMapping("/api/member/location")
     public ResponseEntity<?> memberLocationSave(@RequestBody memberLocationRequest request){
         memberService.memberLocation(request.memberId, request.latitude, request.longitude);
@@ -73,6 +78,7 @@ public class MemberApiController {
         return ResponseEntity.ok("member location save successfully");
     }
 
+    //==DTO==//
     @Data
     @AllArgsConstructor
     static class Result<T>{
@@ -110,7 +116,7 @@ public class MemberApiController {
         private Long memberId;
     }
 
-// DTO 말고 그냥 Long memberId로 받으면 {'memberId':153} 말고 { 153 } 이렇게 받아야 됨
+    // DTO 말고 그냥 Long memberId로 받으면 {'memberId':153} 말고 { 153 } 이렇게 받아야 됨
     @Data
     static class PlayingGameRequest {
         private Long memberId;

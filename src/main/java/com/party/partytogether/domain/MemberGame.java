@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
+//회원이 하고 있는 게임 도메인
 @Entity
 @Getter
 @Setter
@@ -15,11 +17,13 @@ public class MemberGame {
     @JsonBackReference
     private Long id;
 
+    //다대일 관계
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
+    //다대일 관계
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;

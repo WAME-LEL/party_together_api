@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+//게시판 도메인
 @Entity
 @Getter
 @Setter
@@ -16,19 +17,18 @@ public class Board {
     @Column(name = "board_id")
     private Long id;
 
-
     private String type;
 
     @Column(columnDefinition = "TEXT")
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-
     @Column(columnDefinition = "TEXT")
     private String opentalk;
 
     private LocalDateTime time;
 
+    //다대일 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

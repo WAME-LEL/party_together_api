@@ -21,23 +21,25 @@ import java.util.stream.Collectors;
 public class GuildApiController {
     private final GuildService guildService;
 
+
+    // 길드 정보 조회
     @GetMapping("/api/guild")
     public Result guildInfo(@ModelAttribute GuildInfoRequest request){
         List<Guild> guildList = guildService.findAllDESC();
-        updateSequence(guildList);
+        updateRanking(guildList);
 
         Guild guild = guildService.findOneJoinLeaderAndGame(request.guildId);
         GuildDto guildDto = new GuildDto(guild);
         return new Result(guildDto);
     }
 
-
-
+    // 길드 리스트 조회
     @GetMapping("/api/guilds")
     public Result guildList(){
         List<Guild> guildList = guildService.findAllDESC();
-        AtomicInteger rankCounter = new AtomicInteger(1);
+        AtomicInteger rankCounter = new AtomicInteger(1);       // 길드 랭킹을 위한 카운터
 
+        // 길드 리스트를 DTO로 변환
         List<GuildListDto> collect = guildList.stream()
                 .map(g ->
                 {GuildListDto dto = new GuildListDto(g.getId() ,g.getName(), g.getPoint() ,rankCounter.get(), g.getGame(), g.getMember().size());
@@ -49,6 +51,7 @@ public class GuildApiController {
         return new Result(collect);
     }
 
+    // 길드 멤버 리스트 조회
     @GetMapping("/api/guild/members")
     public Result memberList(@ModelAttribute GuildListRequest request){
         List<Member> guildMembers = guildService.findAllMembers(request.guildId);
@@ -57,6 +60,7 @@ public class GuildApiController {
         return new Result(guildMembers);
     }
 
+    // 길드 등록
     @PostMapping("/api/guild/registration")
     public ResponseEntity<?> guildRegistration(@RequestBody GuildRegistrationRequest request){
 
@@ -65,15 +69,24 @@ public class GuildApiController {
         return ResponseEntity.ok("guild Registration successfully");
     }
 
+    // 길드 포인트 추가
     @PostMapping("/api/guild/point/add")
     public ResponseEntity<?> addPoint(@RequestBody AddGuildPointRequest request){
         guildService.addPoint(request.guildId, request.point);
 
         List<Guild> guildList = guildService.findAllDESC();
-        updateSequence(guildList);
+        updateRanking(guildList);
 
 
         return ResponseEntity.ok(request.point + "point add");
+    }
+
+    //==DTO==//
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T>{
+        private T data;
     }
 
     @Data
@@ -112,13 +125,6 @@ public class GuildApiController {
         private Guild guild;
     }
 
-
-    @Data
-    @AllArgsConstructor
-    static class Result<T>{
-        private T data;
-    }
-
     @Data
     @AllArgsConstructor
     static class GuildListDto{
@@ -131,18 +137,9 @@ public class GuildApiController {
 
     }
 
-//    @Data
-//    @AllArgsConstructor
-//    static class GuildDto{
-//        private Long id;
-//        private String name;
-//        private String introduce;
-//        private int point;
-//        private Game game;
-//        private List<Member> member;
-//    }
+    //길드 랭킹 업데이트 메서드
 
-    private void updateSequence(List<Guild> guildList) {
+    private void updateRanking(List<Guild> guildList) {
         AtomicInteger rankCounter = new AtomicInteger(1);
         guildList.forEach(g -> {
             guildService.updateGuildRanking(g.getId(), rankCounter.getAndIncrement());

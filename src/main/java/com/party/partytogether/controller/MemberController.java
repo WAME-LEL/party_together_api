@@ -19,6 +19,7 @@ public class MemberController {
     private final MemberService memberService;
 
 
+    // 회원 리스트 조회
     @GetMapping("/member")
     public String memberList(Model model){
         List<Member> memberList = memberService.findAll();
@@ -27,12 +28,14 @@ public class MemberController {
         return "member/memberList";
     }
 
+    // 회원 가입 폼으로 이동
     @GetMapping("/member/add")
     public String memberForm(){
 
         return "member/addMember";
     }
 
+    // 회원 가입
     @PostMapping("/member/regist")
     public String memberRegist(@RequestParam ("nickname") String nickname,
                                @RequestParam ("username") String username,
@@ -44,6 +47,7 @@ public class MemberController {
 
     }
 
+    // 회원 삭제
     @PostMapping("/member/{id}/delete")
     public String memberDelete(@PathVariable("id") Long id){
         memberService.memberDelete(id);
@@ -51,6 +55,7 @@ public class MemberController {
         return "redirect:/member";
     }
 
+    // 길드 가입
     @PostMapping("/member/guild/join")
     public String guildJoin(@RequestParam ("guildId") Long guildId,
                             @RequestParam ("memberId") Long memberId){
