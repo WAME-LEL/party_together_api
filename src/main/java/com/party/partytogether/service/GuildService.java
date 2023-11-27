@@ -65,6 +65,12 @@ public class GuildService {
         guild.setRanking(ranking);
     }
 
+    @Transactional
+    public void addPoint(Long guildId, int point){
+        Guild guild = guildRepository.findOne(guildId);
+        guild.setPoint(point);
+    }
+
 
 
 

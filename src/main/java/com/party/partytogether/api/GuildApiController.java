@@ -24,15 +24,14 @@ public class GuildApiController {
     @GetMapping("/api/guild")
     public Result guildInfo(@ModelAttribute GuildInfoRequest request){
         List<Guild> guildList = guildService.findAllDESC();
-        AtomicInteger rankCounter = new AtomicInteger(1);
-        guildList.forEach(g -> {
-            guildService.updateGuildRanking(g.getId(), rankCounter.getAndIncrement());
-        });
+        updateSequence(guildList);
 
         Guild guild = guildService.findOneJoinLeaderAndGame(request.guildId);
         GuildDto guildDto = new GuildDto(guild);
         return new Result(guildDto);
     }
+
+
 
     @GetMapping("/api/guilds")
     public Result guildList(){
@@ -65,6 +64,24 @@ public class GuildApiController {
 
         return ResponseEntity.ok("guild Registration successfully");
     }
+
+    @PostMapping("/api/guild/point/add")
+    public ResponseEntity<?> addPoint(@RequestBody AddGuildPointRequest request){
+        guildService.addPoint(request.guildId, request.point);
+
+        List<Guild> guildList = guildService.findAllDESC();
+        updateSequence(guildList);
+
+
+        return ResponseEntity.ok(request.point + "point add");
+    }
+
+    @Data
+    static class AddGuildPointRequest{
+        private Long guildId;
+        private int point;
+    }
+
 
     @Data
     static class GuildRegistrationRequest{
@@ -124,6 +141,13 @@ public class GuildApiController {
 //        private Game game;
 //        private List<Member> member;
 //    }
+
+    private void updateSequence(List<Guild> guildList) {
+        AtomicInteger rankCounter = new AtomicInteger(1);
+        guildList.forEach(g -> {
+            guildService.updateGuildRanking(g.getId(), rankCounter.getAndIncrement());
+        });
+    }
 
 }
 

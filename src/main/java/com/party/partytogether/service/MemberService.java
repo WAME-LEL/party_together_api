@@ -59,6 +59,20 @@ public class MemberService {
         member.setLongitude(longitude);
     }
 
+    public Double calculateDistance(Double lat1, Double lon1, Double lat2, Double lon2) {
+        final double EARTH_RADIUS = 6371.0; // 지구 반경 (km)
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS * c; // 결과는 킬로미터 단위
+    }
+
     public Member singIn(String username, String password){
         return memberRepository.signIn(username, password);
     }
