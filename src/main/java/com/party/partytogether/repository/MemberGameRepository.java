@@ -1,5 +1,6 @@
 package com.party.partytogether.repository;
 
+import com.party.partytogether.domain.Member;
 import com.party.partytogether.domain.MemberGame;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
@@ -35,6 +36,17 @@ public class MemberGameRepository {
                 .setParameter("memberId", memberId)
                 .getResultList();
 
+
+        return results;
+    }
+
+    public List<MemberGame> findAllGameByMember(Long memberId){
+        List<MemberGame> results = em.createQuery(
+                        "select mg" +
+                                " from MemberGame mg " +
+                                "where mg.member.id = :memberId", MemberGame.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
 
         return results;
     }

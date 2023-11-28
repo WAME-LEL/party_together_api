@@ -32,7 +32,8 @@ public class MemberGameApiController {
         Map<Long, List<Game>> allSameMember = memberGameService.findAllSameMember(request.memberId);
 
         Member user = memberService.findOne(request.memberId);
-        int total = gameService.findAll().size();
+        int total = memberGameService.findAllGameByMember(request.memberId).size();
+
         List<SameMemberResponse> response = new ArrayList<>();
 
         // 같은 게임을 하고 있는 회원들의 정보를 DTO로 변환

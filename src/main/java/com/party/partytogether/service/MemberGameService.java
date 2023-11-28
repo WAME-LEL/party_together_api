@@ -2,6 +2,7 @@ package com.party.partytogether.service;
 
 
 import com.party.partytogether.domain.Game;
+import com.party.partytogether.domain.MemberGame;
 import com.party.partytogether.repository.GameRepository;
 import com.party.partytogether.repository.MemberGameRepository;
 import jakarta.persistence.Tuple;
@@ -36,6 +37,10 @@ public class MemberGameService {
         }
 
         return sameMemberMap;
+    }
+    
+    public List<MemberGame> findAllGameByMember(Long memberId) {
+        return memberGameRepository.findAllGameByMember(memberId);
     }
 
 
