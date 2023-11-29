@@ -5,6 +5,7 @@ import com.party.partytogether.domain.Game;
 import com.party.partytogether.domain.Guild;
 import com.party.partytogether.domain.Member;
 import com.party.partytogether.service.GuildService;
+import com.party.partytogether.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +21,16 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:8081")
 public class GuildApiController {
     private final GuildService guildService;
-
+    private final MemberService memberService;
 
     // 길드 정보 조회
     @GetMapping("/api/guild")
     public Result guildInfo(@ModelAttribute GuildInfoRequest request){
         List<Guild> guildList = guildService.findAllDESC();
         updateRanking(guildList);
+        Member member = memberService.findOne(request.memberId);
 
-        Guild guild = guildService.findOneJoinLeaderAndGame(request.guildId);
+        Guild guild = guildService.findOneJoinLeaderAndGame(member.getGuild().getId());
         GuildDto guildDto = new GuildDto(guild);
         return new Result(guildDto);
     }
@@ -81,6 +83,8 @@ public class GuildApiController {
         return ResponseEntity.ok(request.point + "point add");
     }
 
+//    @PostMapping("/api/guild/war")
+
     //==DTO==//
 
     @Data
@@ -116,7 +120,7 @@ public class GuildApiController {
 
     @Data
     static class GuildInfoRequest{
-        private Long guildId;
+        private Long memberId;
     }
 
     @Data
@@ -138,7 +142,6 @@ public class GuildApiController {
     }
 
     //길드 랭킹 업데이트 메서드
-
     private void updateRanking(List<Guild> guildList) {
         AtomicInteger rankCounter = new AtomicInteger(1);
         guildList.forEach(g -> {

@@ -22,9 +22,11 @@ public class MemberService {
 
     //회원 등록
     @Transactional
-    public void memberRegistration(String nickname, String username, String password){
+    public Long memberRegistration(String nickname, String username, String password){
         Member member = Member.createMember(nickname, username, password);
-        memberRepository.save(member);
+        Long memberId = memberRepository.save(member);
+        return memberId;
+
     }
 
     //회원 삭제
@@ -35,6 +37,7 @@ public class MemberService {
 
 
     //하고 있는 게임 등록
+    @Transactional
     public void playingGameRegistration(Long memberId, List<Game> gameList){
         Member member = memberRepository.findOne(memberId);
 

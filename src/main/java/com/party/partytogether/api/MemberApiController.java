@@ -39,9 +39,9 @@ public class MemberApiController {
     // 회원가입
     @PostMapping("/api/member/signUp")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest request){
-        memberService.memberRegistration(request.nickname, request.username, request.password);
+        Long memberId = memberService.memberRegistration(request.nickname, request.username, request.password);
 
-        return ResponseEntity.ok("signUp successfully");
+        return ResponseEntity.ok(new Result(new SignUpResponse(memberId)));
     }
 
     // 길드 가입
@@ -101,6 +101,12 @@ public class MemberApiController {
         private String nickname;
         private String username;
         private String password;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class SignUpResponse{
+        private Long memberId;
     }
 
     @Data

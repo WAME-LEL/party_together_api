@@ -54,7 +54,7 @@ public class MemberGameApiController {
                         Double.valueOf(member.getLatitude()),
                         Double.valueOf(member.getLongitude()));
             } else {
-                distance = 0.0;     // 좌표가 없으면 거리 0
+                distance = 42000;     // 좌표가 없으면 거리 0
             }
 
             // DTO에 추가
