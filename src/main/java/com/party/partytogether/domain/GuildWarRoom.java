@@ -39,4 +39,14 @@ public class GuildWarRoom {
 
         return room;
     }
+
+    //==연관 관계 메서드==//
+    public static GuildWarRoom joinRoom(Guild guild, Member member, Integer roomNumber){
+        GuildWarRoom room = new GuildWarRoom();
+        room.setRoomNumber(roomNumber);
+        room.setGuild(guild);
+        room.setMember(member);
+
+        return room;
+    }
 }

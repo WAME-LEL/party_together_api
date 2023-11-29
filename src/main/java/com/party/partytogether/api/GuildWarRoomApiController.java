@@ -8,10 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,23 +16,26 @@ public class GuildWarRoomApiController {
     private final GuildWarRoomService guildWarRoomService;
 
     @PostMapping("/api/guildWar/add")
-    public ResponseEntity<?> AddGuildWarRoom(@ModelAttribute AddGuildWarRoomRequest request){
+    public ResponseEntity<?> AddGuildWarRoom(@RequestBody AddGuildWarRoomRequest request){
+        System.out.println("request = " + request);
         Integer roomNumber = guildWarRoomService.save(request.guildId, request.memberId);
 
         return ResponseEntity.ok(new Result(new AddGuildWarRoomResponse(roomNumber)));
     }
 
-    @GetMapping("/api/guildWar")
-    public ResponseEntity<?> entranceRoom(@ModelAttribute EntranceRoomRequest request){
+    @PostMapping("/api/guildWar")
+    public ResponseEntity<?> entranceRoom(@RequestBody EntranceRoomRequest request){
         try{
             GuildWarRoom room = guildWarRoomService.findOneByRoomNumber(request.roomNumber);
-        }catch(NoResultException exception){
+            guildWarRoomService.joinRoom(request.roomNumber, request.memberId);
+
+        }catch(Exception exception){
             return ResponseEntity.ok("failed");
         }
         return ResponseEntity.ok("success");
 
-
     }
+
 
 
     @Data
@@ -59,6 +59,7 @@ public class GuildWarRoomApiController {
     @Data
     static class EntranceRoomRequest{
         private Integer roomNumber;
+        private Long memberId;
     }
 
 

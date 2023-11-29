@@ -27,8 +27,15 @@ public class GuildWarRoomService {
         GuildWarRoom room = GuildWarRoom.createRoom(guild, member);
 
         return guildWarRoomRepository.save(room);
+    }
 
+    @Transactional
+    public void joinRoom(Integer roomNumber, Long memberId){
+        Member member = memberRepository.findOne(memberId);
+        Guild guild = member.getGuild();
 
+        GuildWarRoom room = GuildWarRoom.joinRoom(guild, member, roomNumber);
+        guildWarRoomRepository.save(room);
     }
 
     public GuildWarRoom findOne(Long id){
