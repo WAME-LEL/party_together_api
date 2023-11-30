@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequiredArgsConstructor
 public class GuildWarRoomApiController {
@@ -33,6 +36,19 @@ public class GuildWarRoomApiController {
             return ResponseEntity.ok("failed");
         }
         return ResponseEntity.ok("success");
+
+    }
+
+    @GetMapping("/api/guildWar")
+    public ResponseEntity<?> roomInfo(@ModelAttribute RoomInfoRequest request){
+        GuildWarRoom room = guildWarRoomService.findOneByRoomNumber(request.roomNumber);
+        List<GuildWarRoom> roomMemberList = guildWarRoomService.findAllByRoomNumber(request.roomNumber);
+        List<RoomInfoResponse> collect = roomMemberList
+                .stream()
+                .map(r -> new RoomInfoResponse(r.getGuild().getId(), r.getGuild().getName(), r.getMember().getNickname()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new Result(collect));
 
     }
 
@@ -60,6 +76,19 @@ public class GuildWarRoomApiController {
     static class EntranceRoomRequest{
         private Integer roomNumber;
         private Long memberId;
+    }
+
+    @Data
+    static class RoomInfoRequest{
+        private Integer roomNumber;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class RoomInfoResponse{
+        private Long guildId;
+        private String guildName;
+        private String memberName;
     }
 
 

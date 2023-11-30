@@ -30,11 +30,17 @@ public class GuildWarRoomRepository {
     public GuildWarRoom findOneByRoomNumber(Integer roomNumber){
         return em.createQuery("select gwr from GuildWarRoom gwr where gwr.roomNumber = :roomNumber", GuildWarRoom.class)
                 .setParameter("roomNumber", roomNumber)
-                .getSingleResult();
+                .getResultList().get(0);
     }
 
     public List<GuildWarRoom> findAll(){
         return em.createQuery("select gwr from GuildWarRoom gwr", GuildWarRoom.class)
+                .getResultList();
+    }
+
+    public List<GuildWarRoom> findAllByRoomNumber(Integer roomNumber){
+        return em.createQuery("select gwr from GuildWarRoom gwr where gwr.roomNumber = :roomNumber order by gwr.guild.id desc", GuildWarRoom.class)
+                .setParameter("roomNumber", roomNumber)
                 .getResultList();
     }
 

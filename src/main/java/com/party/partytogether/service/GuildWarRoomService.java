@@ -42,13 +42,19 @@ public class GuildWarRoomService {
         return guildWarRoomRepository.findOne(id);
     }
 
+    public GuildWarRoom findOneByRoomNumber(Integer roomNumber){
+        return guildWarRoomRepository.findOneByRoomNumber(roomNumber);
+    }
+
     public List<GuildWarRoom> findAll(){
         return guildWarRoomRepository.findAll();
     }
 
-    public GuildWarRoom findOneByRoomNumber(Integer roomNumber){
-        return guildWarRoomRepository.findOneByRoomNumber(roomNumber);
+    public List<GuildWarRoom> findAllByRoomNumber(Integer roomNumber){
+        return guildWarRoomRepository.findAllByRoomNumber(roomNumber);
     }
+
+
 
 
 
