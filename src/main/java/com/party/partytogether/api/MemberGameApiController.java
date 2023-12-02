@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -46,6 +47,8 @@ public class MemberGameApiController {
             Double similarity = (double)sameGameList.size() / total * 100;
             double distance;
 
+            Integer age = member.getBirthYear() - LocalDate.now().getYear();
+
             // 좌표가 있으면 거리 계산
             if (user.getLatitude() != null && user.getLongitude() != null &&
                     member.getLatitude() != null && member.getLongitude() != null) {
@@ -58,8 +61,9 @@ public class MemberGameApiController {
                 distance = 42000;     // 좌표가 없으면 거리 0
             }
 
+
             // DTO에 추가
-            response.add(new SameMemberResponse(member.getId(), member.getNickname(), sameGameList, similarity, distance));
+            response.add(new SameMemberResponse(member.getId(), member.getNickname(), age, sameGameList, similarity, distance));
         }
 
         // 거리 순으로 정렬
@@ -88,6 +92,7 @@ public class MemberGameApiController {
     static class SameMemberResponse {
         private Long memberId;
         private String nickname;
+        private Integer age;
         private List<Game> sameGameList;
         private Double similarity;
         private Double distance;

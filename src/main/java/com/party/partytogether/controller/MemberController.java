@@ -39,9 +39,10 @@ public class MemberController {
     @PostMapping("/member/regist")
     public String memberRegist(@RequestParam ("nickname") String nickname,
                                @RequestParam ("username") String username,
-                               @RequestParam ("password") String password){
+                               @RequestParam ("password") String password,
+                               @RequestParam ("birthYear") Integer birthYear){
 
-        memberService.memberRegistration(nickname, username, password);
+        memberService.memberRegistration(nickname, username, password, birthYear);
 
         return "redirect:/member";
 

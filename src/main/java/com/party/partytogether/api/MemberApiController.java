@@ -39,7 +39,7 @@ public class MemberApiController {
     // 회원가입
     @PostMapping("/api/member/signUp")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest request){
-        Long memberId = memberService.memberRegistration(request.nickname, request.username, request.password);
+        Long memberId = memberService.memberRegistration(request.nickname, request.username, request.password, request.birthYear);
 
         return ResponseEntity.ok(new Result(new SignUpResponse(memberId)));
     }
@@ -65,7 +65,6 @@ public class MemberApiController {
     @PostMapping("/api/member/game")
     public ResponseEntity<?> playingGameRegistration(@RequestBody GameRegistrationRequest request){
         memberService.playingGameRegistration(request.getMemberId(),request.getGameList());
-
 
         return ResponseEntity.ok("playing game registration successfully");
     }
@@ -101,6 +100,7 @@ public class MemberApiController {
         private String nickname;
         private String username;
         private String password;
+        private Integer birthYear;
     }
 
     @Data

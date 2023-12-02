@@ -22,8 +22,8 @@ public class MemberService {
 
     //회원 등록
     @Transactional
-    public Long memberRegistration(String nickname, String username, String password){
-        Member member = Member.createMember(nickname, username, password);
+    public Long memberRegistration(String nickname, String username, String password, Integer birthYear){
+        Member member = Member.createMember(nickname, username, password, birthYear);
         Long memberId = memberRepository.save(member);
         return memberId;
 

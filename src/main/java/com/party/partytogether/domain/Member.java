@@ -22,6 +22,7 @@ public class Member {
     private String nickname;
     private String username;
     private String password;
+    private Integer birthYear;
 
     private String latitude;
     private String longitude;
@@ -37,11 +38,12 @@ public class Member {
     private Guild guild;
 
     //== 생성 메서드 ==//
-    public static Member createMember(String nickname, String username, String password){
+    public static Member createMember(String nickname, String username, String password, Integer birthYear){
         Member member = new Member();
         member.setNickname(nickname);
         member.setUsername(username);
         member.setPassword(password);
+        member.setBirthYear(birthYear);
 
         return member;
     }
@@ -67,6 +69,5 @@ public class Member {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return EARTH_RADIUS * c; // 결과는 킬로미터 단위
     }
-
 
 }
