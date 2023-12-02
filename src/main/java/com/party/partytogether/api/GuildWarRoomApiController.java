@@ -2,7 +2,9 @@ package com.party.partytogether.api;
 
 
 import com.party.partytogether.domain.GuildWarRoom;
+import com.party.partytogether.domain.Member;
 import com.party.partytogether.service.GuildWarRoomService;
+import com.party.partytogether.service.MemberService;
 import jakarta.persistence.NoResultException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,13 +12,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8081")
 public class GuildWarRoomApiController {
     private final GuildWarRoomService guildWarRoomService;
+    private final MemberService memberService;
 
     @PostMapping("/api/guildWar/add")
     public ResponseEntity<?> AddGuildWarRoom(@RequestBody AddGuildWarRoomRequest request){
@@ -41,16 +48,44 @@ public class GuildWarRoomApiController {
 
     @GetMapping("/api/guildWar")
     public ResponseEntity<?> roomInfo(@ModelAttribute RoomInfoRequest request){
-        GuildWarRoom room = guildWarRoomService.findOneByRoomNumber(request.roomNumber);
-        List<GuildWarRoom> roomMemberList = guildWarRoomService.findAllByRoomNumber(request.roomNumber);
-        List<RoomInfoResponse> collect = roomMemberList
-                .stream()
-                .map(r -> new RoomInfoResponse(r.getGuild().getId(), r.getGuild().getName(), r.getMember().getNickname()))
-                .collect(Collectors.toList());
+        try{
+            GuildWarRoom room = guildWarRoomService.findOneByRoomNumber(request.roomNumber);
+            List<GuildWarRoom> roomMemberList = guildWarRoomService.findAllByRoomNumber(request.roomNumber);
+            Map<Long, List<RoomInfoResponse>> collect = roomMemberList
+                    .stream()
+                    .map(r -> new RoomInfoResponse(r.getGuild().getId(), r.getGuild().getName(), r.getMember().getNickname()))
+                    .collect(Collectors.groupingBy(RoomInfoResponse::getGuildId));
 
-        return ResponseEntity.ok(new Result(collect));
+            Iterator<Long> iterator = collect.keySet().iterator();
+
+            List<RoomInfoResponse> FirstRoomInfoResponse = collect.getOrDefault(iterator.next(), Collections.emptyList());
+            //같은 길드전 방에 2개의 길드가 있다면 실행
+            if(iterator.hasNext()){
+                List<RoomInfoResponse> SecondRoomInfoResponse = collect.getOrDefault(iterator.next(), Collections.emptyList());
+                return ResponseEntity.ok(new Result(new TeamDivide(FirstRoomInfoResponse, SecondRoomInfoResponse)));
+            }
+
+            return ResponseEntity.ok(new Result(new TeamDivide(FirstRoomInfoResponse, Collections.emptyList())));
+
+
+        }catch (Exception e){
+            System.out.println(e.getLocalizedMessage());
+            return ResponseEntity.ok("failed");
+        }
 
     }
+
+    @PostMapping("/api/guildWar/exit")
+    public ResponseEntity<?> roomExit(@RequestBody RoomExitRequest request){
+        guildWarRoomService.roomExit(request.memberId);
+
+        return ResponseEntity.ok("exit");
+    }
+
+//    @PostMapping("/api/guildWar/delete")
+//    public ResponseEntity<?> roomDelete(@RequestBody RoomDeleteRequest request){
+//
+//    }
 
 
 
@@ -91,5 +126,21 @@ public class GuildWarRoomApiController {
         private String memberName;
     }
 
+    @Data
+    @AllArgsConstructor
+    static class TeamDivide{
+        private List<RoomInfoResponse> first;
+        private List<RoomInfoResponse> second;
+    }
+
+    @Data
+    static class RoomExitRequest{
+        private Long memberId;
+    }
+
+//    @Data
+//    static class RoomDeleteRequest{
+//        private Long memberId;
+//    }
 
 }

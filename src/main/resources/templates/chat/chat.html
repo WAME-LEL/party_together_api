@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat Application</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+</head>
+<body>
+<div id="chatPage">
+    <div id="messageArea">
+        <ul id="messageList">
+            <!-- 메시지가 여기에 나타납니다 -->
+        </ul>
+    </div>
+    <form id="messageForm" name="messageForm">
+        <div class="form-group">
+            <input type="text" id="message" placeholder="Type a message..."/>
+        </div>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<script>
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/topic/public', function (chatMessage) {
+                showMessage(JSON.parse(chatMessage.body).content);
+                console.log(JSON.parse(chatMessage.body))
+            });
+        });
+    }
+
+    function showMessage(message) {
+        $("#messageList").append("<li>" + message + "</li>");
+    }
+
+    $(function () {
+        $("#messageForm").on('submit', function (e) {
+            e.preventDefault();
+            sendMessage();
+        });
+    });
+
+    function sendMessage() {
+        var messageContent = $("#message").val();
+        if (messageContent && stompClient) {
+            stompClient.send("/app/sendMessage", {}, JSON.stringify({'content': messageContent}));
+        }
+    }
+
+    connect();
+</script>
+</body>
+</html>

@@ -56,7 +56,8 @@ public class GuildApiController {
     // 길드 멤버 리스트 조회
     @GetMapping("/api/guild/members")
     public Result memberList(@ModelAttribute GuildListRequest request){
-        List<Member> guildMembers = guildService.findAllMembers(request.guildId);
+        Long guildId = memberService.findOne(request.memberId).getGuild().getId();
+        List<Member> guildMembers = guildService.findAllMembers(guildId);
 
 
         return new Result(guildMembers);
@@ -115,7 +116,7 @@ public class GuildApiController {
 
     @Data
     static class GuildListRequest {
-        private Long guildId;
+        private Long memberId;
     }
 
     @Data

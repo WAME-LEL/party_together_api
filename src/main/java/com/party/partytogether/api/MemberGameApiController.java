@@ -9,6 +9,7 @@ import com.party.partytogether.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8081")
 public class MemberGameApiController {
     private final MemberGameService memberGameService;
     private final MemberService memberService;
@@ -42,7 +44,6 @@ public class MemberGameApiController {
             List<Game> sameGameList = allSameMember.get(memberId);
 
             Double similarity = (double)sameGameList.size() / total * 100;
-
             double distance;
 
             // 좌표가 있으면 거리 계산

@@ -19,7 +19,7 @@ public class GuildWarRoom {
 
     private Integer roomNumber;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "guild_id")
     private Guild guild;
 
@@ -29,11 +29,9 @@ public class GuildWarRoom {
 
 
     //==생성 메서드==//
-    public static GuildWarRoom createRoom(Guild guild, Member member){
-        AtomicInteger counter = new AtomicInteger(1);
-
+    public static GuildWarRoom createRoom(Guild guild, Member member, Integer roomNumber){
         GuildWarRoom room = new GuildWarRoom();
-        room.setRoomNumber(counter.getAndIncrement());
+        room.setRoomNumber(roomNumber);
         room.setGuild(guild);
         room.setMember(member);
 

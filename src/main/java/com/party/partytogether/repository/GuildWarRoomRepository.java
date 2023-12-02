@@ -23,6 +23,12 @@ public class GuildWarRoomRepository {
         em.remove(em.find(GuildWarRoom.class, roomId));
     }
 
+    public void deleteAllByRoomNumber(Integer roomNumber){
+        em.createQuery("delete from GuildWarRoom gwr where gwr.roomNumber = :roomNumber")
+                .setParameter("roomNumber", roomNumber)
+                .executeUpdate();
+    }
+
     public GuildWarRoom findOne(Long roomId){
         return em.find(GuildWarRoom.class, roomId);
     }
@@ -31,6 +37,12 @@ public class GuildWarRoomRepository {
         return em.createQuery("select gwr from GuildWarRoom gwr where gwr.roomNumber = :roomNumber", GuildWarRoom.class)
                 .setParameter("roomNumber", roomNumber)
                 .getResultList().get(0);
+    }
+
+    public GuildWarRoom findOneByMemberId(Long memberId){
+        return em.createQuery("select gwr from GuildWarRoom gwr where gwr.member.id = :memberId", GuildWarRoom.class)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
     }
 
     public List<GuildWarRoom> findAll(){
@@ -42,6 +54,11 @@ public class GuildWarRoomRepository {
         return em.createQuery("select gwr from GuildWarRoom gwr where gwr.roomNumber = :roomNumber order by gwr.guild.id desc", GuildWarRoom.class)
                 .setParameter("roomNumber", roomNumber)
                 .getResultList();
+    }
+
+    public Integer findLastRoomNumber(){
+        return em.createQuery("select gwr.roomNumber from GuildWarRoom gwr order by gwr.roomNumber desc", Integer.class)
+                .getResultList().get(0);
     }
 
 

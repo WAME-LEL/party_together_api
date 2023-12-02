@@ -24,9 +24,30 @@ public class GuildWarRoomService {
     public Integer save(Long guildId, Long memberId){
         Guild guild = guildRepository.findOne(guildId);
         Member member = memberRepository.findOne(memberId);
-        GuildWarRoom room = GuildWarRoom.createRoom(guild, member);
+        try{
+            Integer lastRoomNumber = guildWarRoomRepository.findLastRoomNumber();
+            System.out.println("lastRoomNumber = " + lastRoomNumber);
+            GuildWarRoom room = GuildWarRoom.createRoom(guild, member, ++lastRoomNumber);
+            System.out.println("lastRoomNumber = " + lastRoomNumber);
+            return guildWarRoomRepository.save(room);
+        }catch (Exception e){
+            GuildWarRoom room = GuildWarRoom.createRoom(guild, member, 1);
+            return guildWarRoomRepository.save(room);
+        }
 
-        return guildWarRoomRepository.save(room);
+
+    }
+
+    @Transactional
+    public void roomExit(Long memberId){
+        memberRepository.findOne(memberId);
+        GuildWarRoom room = guildWarRoomRepository.findOneByMemberId(memberId);
+        guildWarRoomRepository.delete(room.getId());
+    }
+
+    @Transactional
+    public void roomDelete(Integer roomNumber){
+        guildWarRoomRepository.deleteAllByRoomNumber(roomNumber);
     }
 
     @Transactional
