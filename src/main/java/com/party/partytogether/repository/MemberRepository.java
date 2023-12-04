@@ -33,6 +33,27 @@ public class MemberRepository {
                 .getSingleResult();
     }
 
+    //회원 닉네임 중복 검사
+    public boolean duplicateNickname(String nickname){
+        long count = em.createQuery("select count(m) from Member m where m.nickname = :nickname", long.class)
+                .setParameter("nickname", nickname)
+                .getSingleResult();
+
+        return count > 0;
+    }
+
+    //회원 아이디 중복 검사
+    public boolean duplicateUsername(String username){
+        long count = em.createQuery("select count(m) from Member m where m.username = :username", long.class)
+                .setParameter("username", username)
+                .getSingleResult();
+
+        return count > 0;
+    }
+
+
+
+
     //회원 하나 조회
     public Member findOne(Long id){
         return em.find(Member.class, id);

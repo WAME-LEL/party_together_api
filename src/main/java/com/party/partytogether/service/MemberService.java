@@ -76,6 +76,17 @@ public class MemberService {
         return memberRepository.signIn(username, password);
     }
 
+    //회원 닉네임 중복 검사
+    public boolean duplicateNickname(String nickname){
+        return memberRepository.duplicateNickname(nickname);
+    }
+
+    //회원 아이디 중복 검사
+    public boolean duplicateUsername(String username){
+        return memberRepository.duplicateUsername(username);
+    }
+
+
     //회원 하나 조회
     public Member findOne(Long id){
         return memberRepository.findOne(id);

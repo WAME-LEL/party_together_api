@@ -47,7 +47,7 @@ public class MemberGameApiController {
             Double similarity = (double)sameGameList.size() / total * 100;
             double distance;
 
-            Integer age = member.getBirthYear() - LocalDate.now().getYear();
+            Integer age = LocalDate.now().getYear() - member.getBirthYear();
 
             // 좌표가 있으면 거리 계산
             if (user.getLatitude() != null && user.getLongitude() != null &&
@@ -58,7 +58,7 @@ public class MemberGameApiController {
                         Double.valueOf(member.getLatitude()),
                         Double.valueOf(member.getLongitude()));
             } else {
-                distance = 42000;     // 좌표가 없으면 거리 0
+                distance = 42000;     // 좌표가 없으면 거리 42000(지구 한바퀴)
             }
 
 

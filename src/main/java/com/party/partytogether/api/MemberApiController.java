@@ -44,6 +44,26 @@ public class MemberApiController {
         return ResponseEntity.ok(new Result(new SignUpResponse(memberId)));
     }
 
+    @GetMapping("/api/member/nickname/duplicate")
+    public ResponseEntity<?> duplicateNickname(@ModelAttribute duplicateNicknameRequest request){
+        if(memberService.duplicateNickname(request.nickname)){
+            return ResponseEntity.ok("duplicate");
+        }
+        else{
+            return ResponseEntity.ok("usable");
+        }
+    }
+
+    @GetMapping("/api/member/username/duplicate")
+    public ResponseEntity<?> duplicateUsername(@ModelAttribute duplicateUsernameRequest request){
+        if(memberService.duplicateUsername(request.username)){
+            return ResponseEntity.ok("duplicate");
+        }
+        else{
+            return ResponseEntity.ok("usable");
+        }
+    }
+
     // 길드 가입
     @PostMapping("/api/member/guild/join")
     public ResponseEntity<?> guildJoin(@RequestBody GuildJoinRequest request){
@@ -108,6 +128,18 @@ public class MemberApiController {
     static class SignUpResponse{
         private Long memberId;
     }
+
+    @Data
+    static class duplicateNicknameRequest{
+        private String nickname;
+    }
+
+    @Data
+    static class duplicateUsernameRequest{
+        private String username;
+    }
+
+
 
     @Data
     static class GuildJoinRequest {
