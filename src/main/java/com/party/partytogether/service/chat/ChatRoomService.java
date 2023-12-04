@@ -30,7 +30,7 @@ public class ChatRoomService {
         return chatRoomRepository.findOne(roomId);
     }
 
-    public ChatRoom findOneByMemberId(Long memberId){
+    public List<ChatRoom> findOneByMemberId(Long memberId){
         return chatRoomRepository.findOneByMember(memberId);
     }
 

@@ -22,8 +22,8 @@ public class ChatRoomApiController {
 
     @PostMapping("/api/chatRoom/create")
     public ResponseEntity<?> createChatRoom(@RequestBody CreateChatRoomRequest request){
-        String name = memberService.findOne(request.oneId).getNickname() +  "와" + memberService.findOne(request.otherId).getNickname() + "의 방";
-        chatRoomService.createChatRoom(name, request.oneId, request.otherId);
+        String name = memberService.findOne(request.ownId).getNickname() +  " 와 " + memberService.findOne(request.otherId).getNickname() + " 의 방";
+        chatRoomService.createChatRoom(name, request.ownId, request.otherId);
         return ResponseEntity.ok(name + "생성 완료");
     }
 
@@ -42,11 +42,14 @@ public class ChatRoomApiController {
 
     @GetMapping("/api/chatRoom/info")
     public Result myChatRoomInfo(@ModelAttribute MyChatRoomInfoRequest request){
-        ChatRoom chatRoom = chatRoomService.findOneByMemberId(request.memberId);
+        List<ChatRoom> chatRoomList = chatRoomService.findOneByMemberId(request.memberId);
 
-        return new Result(new MyChatRoomInfoResponse(chatRoom.getId(), chatRoom.getName(), chatRoom.getOne().getId(), chatRoom.getOther().getId()));
+        List<MyChatRoomInfoResponse> collect = chatRoomList.stream()
+                .map(cr -> new MyChatRoomInfoResponse(cr.getId(), cr.getName(), cr.getOne().getId(), cr.getOther().getId()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
     }
-
 
 
     //==DTO==//
@@ -60,7 +63,7 @@ public class ChatRoomApiController {
 
     @Data
     static class CreateChatRoomRequest{
-        private Long oneId;
+        private Long ownId;
         private Long otherId;
     }
 
