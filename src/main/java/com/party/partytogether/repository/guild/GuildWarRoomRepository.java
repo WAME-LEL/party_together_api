@@ -1,7 +1,7 @@
-package com.party.partytogether.repository;
+package com.party.partytogether.repository.guild;
 
 
-import com.party.partytogether.domain.GuildWarRoom;
+import com.party.partytogether.domain.guild.GuildWarRoom;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

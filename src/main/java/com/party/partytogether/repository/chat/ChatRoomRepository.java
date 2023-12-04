@@ -1,7 +1,7 @@
-package com.party.partytogether.repository;
+package com.party.partytogether.repository.chat;
 
 
-import com.party.partytogether.domain.ChatRoom;
+import com.party.partytogether.domain.chat.ChatRoom;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

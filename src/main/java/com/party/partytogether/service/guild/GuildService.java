@@ -1,11 +1,11 @@
-package com.party.partytogether.service;
+package com.party.partytogether.service.guild;
 
 
 import com.party.partytogether.domain.Game;
-import com.party.partytogether.domain.Guild;
+import com.party.partytogether.domain.guild.Guild;
 import com.party.partytogether.domain.Member;
 import com.party.partytogether.repository.GameRepository;
-import com.party.partytogether.repository.GuildRepository;
+import com.party.partytogether.repository.guild.GuildRepository;
 import com.party.partytogether.repository.MemberRepository;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.party.partytogether.domain.Guild.createGuild;
+import static com.party.partytogether.domain.guild.Guild.createGuild;
 
 @Service
 @RequiredArgsConstructor
@@ -77,7 +77,7 @@ public class GuildService {
     @Transactional
     public void addPoint(Long guildId, int point){
         Guild guild = guildRepository.findOne(guildId);
-        guild.setPoint(point);
+        guild.setPoint(guild.getPoint() + point);
     }
 
 

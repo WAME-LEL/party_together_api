@@ -1,8 +1,12 @@
 package com.party.partytogether.controller;
 
-import com.party.partytogether.domain.ChatMessage;
+import com.party.partytogether.domain.chat.ChatMessage;
+import com.party.partytogether.domain.chat.ChatRoom;
+import com.party.partytogether.service.chat.ChatMessageService;
+import com.party.partytogether.service.chat.ChatRoomService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -15,9 +19,12 @@ import java.time.LocalDateTime;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:8081")
+@RequiredArgsConstructor
 public class ChatController {
 
     private SimpMessagingTemplate simpMessagingTemplate;
+    private final ChatMessageService chatMessageService;
+    private final ChatRoomService chatRoomService;
 
     @MessageMapping("/sendMessage")
     @SendTo("/topic/public")
@@ -33,7 +40,10 @@ public class ChatController {
     @SendTo("/topic/chat.{roomId}")
     public ChatMessage sendMessage(@DestinationVariable String roomId, ChatMessage chatMessage) {
         // 메시지 처리 로직
-        chatMessage.setTimestamp(LocalDateTime.now());
+        LocalDateTime nowTime = LocalDateTime.now();
+        chatMessage.setTimestamp(nowTime);
+        ChatRoom room = chatRoomService.findOne(Long.parseLong(roomId));
+        chatMessageService.save(chatMessage.getSenderId(), chatMessage.getReceiverId(), chatMessage.getContent(), nowTime, room);
 
 
         return chatMessage;

@@ -1,10 +1,10 @@
-package com.party.partytogether.service;
+package com.party.partytogether.service.guild;
 
-import com.party.partytogether.domain.Guild;
-import com.party.partytogether.domain.GuildWarRoom;
+import com.party.partytogether.domain.guild.Guild;
+import com.party.partytogether.domain.guild.GuildWarRoom;
 import com.party.partytogether.domain.Member;
-import com.party.partytogether.repository.GuildRepository;
-import com.party.partytogether.repository.GuildWarRoomRepository;
+import com.party.partytogether.repository.guild.GuildRepository;
+import com.party.partytogether.repository.guild.GuildWarRoomRepository;
 import com.party.partytogether.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

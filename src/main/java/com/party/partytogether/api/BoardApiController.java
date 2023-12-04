@@ -34,7 +34,7 @@ public class BoardApiController {
 
         // 게시글 리스트를 DTO로 변환
         List<BoardDto> collect = boardList.stream()
-                .map(b -> new BoardDto(b.getType(), b.getTitle(), b.getContent(), b.getOpentalk(), b.getTime(), b.getMember().getNickname()))
+                .map(b -> new BoardDto(b.getType(), b.getTitle(), b.getContent(), b.getOpentalk(), b.getTime(), b.getMember().getId(), b.getMember().getNickname()))
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -65,6 +65,7 @@ public class BoardApiController {
         private String opentalk;
         private LocalDateTime time;
 
+        private Long memberId;
         private String nickname;
 
     }

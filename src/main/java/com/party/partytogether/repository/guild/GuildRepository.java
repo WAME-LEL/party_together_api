@@ -1,7 +1,7 @@
-package com.party.partytogether.repository;
+package com.party.partytogether.repository.guild;
 
 
-import com.party.partytogether.domain.Guild;
+import com.party.partytogether.domain.guild.Guild;
 import com.party.partytogether.domain.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;

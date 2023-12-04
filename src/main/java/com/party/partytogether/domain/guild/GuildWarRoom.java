@@ -1,11 +1,10 @@
-package com.party.partytogether.domain;
+package com.party.partytogether.domain.guild;
 
 
+import com.party.partytogether.domain.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Getter

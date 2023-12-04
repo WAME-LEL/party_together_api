@@ -1,14 +1,13 @@
-package com.party.partytogether.api;
+package com.party.partytogether.api.chat;
 
 
-import com.party.partytogether.domain.ChatRoom;
+import com.party.partytogether.domain.chat.ChatRoom;
 import com.party.partytogether.service.MemberService;
-import com.party.partytogether.service.ChatRoomService;
+import com.party.partytogether.service.chat.ChatRoomService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8081")
 public class ChatRoomApiController {
     private final ChatRoomService chatRoomService;
     private final MemberService memberService;
@@ -52,16 +52,18 @@ public class ChatRoomApiController {
     //==DTO==//
 
     @Data
+    @AllArgsConstructor
+    static class Result<T>{
+        private T data;
+    }
+
+
+    @Data
     static class CreateChatRoomRequest{
         private Long oneId;
         private Long otherId;
     }
 
-    @Data
-    @AllArgsConstructor
-    static class Result<T>{
-        private T data;
-    }
 
     @Data
     @AllArgsConstructor

@@ -1,8 +1,6 @@
-package com.party.partytogether.domain;
+package com.party.partytogether.domain.chat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.party.partytogether.domain.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

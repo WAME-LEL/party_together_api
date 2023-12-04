@@ -1,7 +1,7 @@
-package com.party.partytogether.service;
+package com.party.partytogether.service.chat;
 
 
-import com.party.partytogether.repository.UserChatRoomRepository;
+import com.party.partytogether.repository.chat.UserChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

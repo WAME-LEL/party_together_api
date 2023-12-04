@@ -1,9 +1,9 @@
-package com.party.partytogether.service;
+package com.party.partytogether.service.chat;
 
 
-import com.party.partytogether.domain.ChatRoom;
+import com.party.partytogether.domain.chat.ChatRoom;
 import com.party.partytogether.domain.Member;
-import com.party.partytogether.repository.ChatRoomRepository;
+import com.party.partytogether.repository.chat.ChatRoomRepository;
 import com.party.partytogether.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,10 @@ public class ChatRoomService {
 
         ChatRoom chatRoom = ChatRoom.createChatRoom(name, one, other);
         chatRoomRepository.save(chatRoom);
+    }
+
+    public ChatRoom findOne(Long roomId){
+        return chatRoomRepository.findOne(roomId);
     }
 
     public ChatRoom findOneByMemberId(Long memberId){

@@ -2,8 +2,8 @@ package com.party.partytogether.controller;
 
 
 import com.party.partytogether.domain.Game;
-import com.party.partytogether.domain.Guild;
-import com.party.partytogether.service.GuildService;
+import com.party.partytogether.domain.guild.Guild;
+import com.party.partytogether.service.guild.GuildService;
 import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.Data;

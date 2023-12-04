@@ -1,6 +1,5 @@
-package com.party.partytogether.domain;
+package com.party.partytogether.domain.chat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,5 +26,18 @@ public class ChatMessage {
     @ManyToOne
     @JoinColumn(name = "chat_room_id") // 외래키
     private ChatRoom chatRoom;
+
+
+    //==생성 메서드==//
+    public static ChatMessage createChatMessage(Long senderId, Long receiverId, String content, LocalDateTime timestamp, ChatRoom chatRoom){
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setSenderId(senderId);
+        chatMessage.setReceiverId(receiverId);
+        chatMessage.setContent(content);
+        chatMessage.setTimestamp(timestamp);
+        chatMessage.setChatRoom(chatRoom);
+
+        return chatMessage;
+    }
 
 }

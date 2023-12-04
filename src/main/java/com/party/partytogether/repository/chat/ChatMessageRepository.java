@@ -1,7 +1,7 @@
-package com.party.partytogether.repository;
+package com.party.partytogether.repository.chat;
 
 
-import com.party.partytogether.domain.ChatMessage;
+import com.party.partytogether.domain.chat.ChatMessage;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -24,6 +24,12 @@ public class ChatMessageRepository {
 
     public List<ChatMessage> findAll(){
         return em.createQuery("select cm from ChatMessage cm", ChatMessage.class)
+                .getResultList();
+    }
+
+    public List<ChatMessage> findAllByRoomId(Long roomId){
+        return em.createQuery("select cm from ChatMessage cm where cm.chatRoom.id =:roomId order by cm.timestamp asc", ChatMessage.class)
+                .setParameter("roomId", roomId)
                 .getResultList();
     }
 

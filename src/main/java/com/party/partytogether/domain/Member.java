@@ -2,6 +2,7 @@ package com.party.partytogether.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.party.partytogether.domain.guild.Guild;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

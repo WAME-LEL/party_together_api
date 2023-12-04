@@ -1,10 +1,10 @@
-package com.party.partytogether.api;
+package com.party.partytogether.api.guild;
 
 
 import com.party.partytogether.domain.Game;
-import com.party.partytogether.domain.Guild;
+import com.party.partytogether.domain.guild.Guild;
 import com.party.partytogether.domain.Member;
-import com.party.partytogether.service.GuildService;
+import com.party.partytogether.service.guild.GuildService;
 import com.party.partytogether.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -83,8 +83,6 @@ public class GuildApiController {
 
         return ResponseEntity.ok(request.point + "point add");
     }
-
-//    @PostMapping("/api/guild/war")
 
     //==DTO==//
 
