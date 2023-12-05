@@ -34,10 +34,16 @@ public class BoardRepository {
     }
 
     //게시판 타입에 따른 게시글 검색
-    public List<Board> findSearchWord(String keyword){
-        return em.createQuery("select b from Board b WHERE b.type LIKE :keyword", Board.class)
+    public List<Board> findAllBySearchWord(String keyword){
+        return em.createQuery("select b from Board b where b.type like :keyword", Board.class)
                 .setParameter("keyword", keyword)
                 .getResultList();
 
+    }
+
+    public List<Board> findAllByMemberId(Long memberId){
+        return em.createQuery("select b from Board b where b.member.id = :memberId", Board.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
     }
 }

@@ -26,11 +26,23 @@ public class BoardApiController {
 
         // 검색어가 있으면 검색어로 검색, 없으면 전체 검색
         if(keyword != null && !keyword.isEmpty()){
-            boardList = boardService.findSearchWord(keyword);
+            boardList = boardService.findAllBySearchWord(keyword);
         }
         else{
             boardList = boardService.findAll();
         }
+
+        // 게시글 리스트를 DTO로 변환
+        List<BoardDto> collect = boardList.stream()
+                .map(b -> new BoardDto(b.getId(), b.getType(), b.getTitle(), b.getContent(), b.getOpentalk(), b.getTime(), b.getMember().getId(), b.getMember().getNickname()))
+                .collect(Collectors.toList());
+
+        return new Result(collect);
+    }
+
+    @GetMapping("/api/board/member")
+    public Result boardListByMemberId(@RequestParam("memberId") Long memberId){
+        List<Board> boardList = boardService.findAllByMemberId(memberId);
 
         // 게시글 리스트를 DTO로 변환
         List<BoardDto> collect = boardList.stream()

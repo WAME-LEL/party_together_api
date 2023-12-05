@@ -44,8 +44,12 @@ public class BoardService {
     }
 
     //게시판 타입에 따른 게시글 검색
-    public List<Board> findSearchWord(String keyword){
-        return boardRepository.findSearchWord(keyword);
+    public List<Board> findAllBySearchWord(String keyword){
+        return boardRepository.findAllBySearchWord(keyword);
+    }
+
+    public List<Board> findAllByMemberId(Long memberId){
+        return boardRepository.findAllByMemberId(memberId);
     }
 
 }

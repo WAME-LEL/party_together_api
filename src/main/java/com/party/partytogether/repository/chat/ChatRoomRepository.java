@@ -23,7 +23,7 @@ public class ChatRoomRepository {
     }
 
     public List<ChatRoom> findOneByMember(Long memberId){
-        return em.createQuery("select cr from ChatRoom cr where cr.one.id = :memberId", ChatRoom.class)
+        return em.createQuery("select cr from ChatRoom cr where cr.one.id = :memberId or cr.other.id = :memberId", ChatRoom.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
     }

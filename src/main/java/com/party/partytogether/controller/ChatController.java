@@ -30,8 +30,7 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage sendMessage(ChatMessage chatMessage) {
         chatMessage.setTimestamp(LocalDateTime.now());
-//        ChatMessageDto chatMessageDto = new ChatMessageDto(chatMessage.getSenderId(), chatMessage.getReceiverId(), chatMessage.getContent(), chatMessage.getTimestamp());
-        // 메시지 처리 로직
+
         return chatMessage;
     }
 

@@ -23,7 +23,7 @@ public class BoardController {
     public String boardList(@RequestParam(value = "keyword", required = false) String keyword, Model model){
         List<Board> boardList;
         if(keyword != null && !keyword.isEmpty()){
-            boardList = boardService.findSearchWord(keyword);
+            boardList = boardService.findAllBySearchWord(keyword);
         }
         else{
             boardList = boardService.findAll();
