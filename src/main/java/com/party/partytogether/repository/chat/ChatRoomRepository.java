@@ -13,8 +13,9 @@ import java.util.List;
 public class ChatRoomRepository {
     private final EntityManager em;
 
-    public void save(ChatRoom chatRoom){
+    public ChatRoom save(ChatRoom chatRoom){
         em.persist(chatRoom);
+        return chatRoom;
     }
 
     public ChatRoom findOne(Long chatRoomId){
@@ -25,6 +26,13 @@ public class ChatRoomRepository {
         return em.createQuery("select cr from ChatRoom cr where cr.one.id = :memberId", ChatRoom.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
+    }
+
+    public ChatRoom findOneByOneOrOther(Long oneId, Long otherId){
+        return em.createQuery("select cr from ChatRoom cr where (cr.one.id =: oneId and cr.other.id = :otherId) or(cr.one.id =:otherId and cr.other.id = :oneId)", ChatRoom.class)
+                .setParameter("oneId", oneId)
+                .setParameter("otherId", otherId)
+                .getSingleResult();
     }
 
     public List<ChatRoom> findAll(){

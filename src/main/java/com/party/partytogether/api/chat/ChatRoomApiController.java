@@ -22,9 +22,9 @@ public class ChatRoomApiController {
 
     @PostMapping("/api/chatRoom/create")
     public ResponseEntity<?> createChatRoom(@RequestBody CreateChatRoomRequest request){
-        String name = memberService.findOne(request.ownId).getNickname() +  " 와 " + memberService.findOne(request.otherId).getNickname() + " 의 방";
-        chatRoomService.createChatRoom(name, request.ownId, request.otherId);
-        return ResponseEntity.ok(name + "생성 완료");
+        String name = memberService.findOne(request.oneId).getNickname() +  " 와 " + memberService.findOne(request.otherId).getNickname() + " 의 방";
+        Long roomId = chatRoomService.createChatRoom(name, request.oneId, request.otherId);
+        return ResponseEntity.ok(roomId);
     }
 
     @GetMapping("/api/chatRoom")
@@ -36,21 +36,35 @@ public class ChatRoomApiController {
                 .map(c -> new ChatRoomDto(c.getId(), c.getName()))
                 .collect(Collectors.toList());
 
-        return new Result(new ViewChatRoomResponse(collect));
 
+        return new Result(new ViewChatRoomResponse(collect));
     }
 
     @GetMapping("/api/chatRoom/info")
-    public Result myChatRoomInfo(@ModelAttribute MyChatRoomInfoRequest request){
+    public ResponseEntity<?> myChatRoomInfo(@ModelAttribute MyChatRoomInfoRequest request){
         List<ChatRoom> chatRoomList = chatRoomService.findOneByMemberId(request.memberId);
 
         List<MyChatRoomInfoResponse> collect = chatRoomList.stream()
                 .map(cr -> new MyChatRoomInfoResponse(cr.getId(), cr.getName(), cr.getOne().getId(), cr.getOther().getId()))
                 .collect(Collectors.toList());
+        if(collect.isEmpty()){
+            return ResponseEntity.ok("nothing");
+        }
 
-        return new Result(collect);
+        return ResponseEntity.ok(new Result(collect));
     }
 
+    @GetMapping("/api/chatRoom/info/us")
+    public ResponseEntity<?> ourChatRoomInfo(@ModelAttribute OurChatInfoRequest request){
+        try{
+            ChatRoom chatRoom = chatRoomService.findOneByOneOrOther(request.oneId, request.otherId);
+            return ResponseEntity.ok(chatRoom.getId());
+
+        }catch(Exception e){
+            return ResponseEntity.ok("nothing");
+        }
+
+    }
 
     //==DTO==//
 
@@ -63,7 +77,7 @@ public class ChatRoomApiController {
 
     @Data
     static class CreateChatRoomRequest{
-        private Long ownId;
+        private Long oneId;
         private Long otherId;
     }
 
@@ -91,7 +105,13 @@ public class ChatRoomApiController {
     static class MyChatRoomInfoResponse{
         private Long roomId;
         private String name;
-        private Long ownId;
+        private Long oneId;
+        private Long otherId;
+    }
+
+    @Data
+    static class OurChatInfoRequest{
+        private Long oneId;
         private Long otherId;
     }
 

@@ -18,12 +18,13 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final MemberRepository memberRepository;
 
-    public void createChatRoom(String name, Long oneId, Long otherId){
+    public Long createChatRoom(String name, Long oneId, Long otherId){
         Member one = memberRepository.findOne(oneId);
         Member other = memberRepository.findOne(otherId);
 
         ChatRoom chatRoom = ChatRoom.createChatRoom(name, one, other);
-        chatRoomRepository.save(chatRoom);
+        ChatRoom save = chatRoomRepository.save(chatRoom);
+        return save.getId();
     }
 
     public ChatRoom findOne(Long roomId){
@@ -34,6 +35,10 @@ public class ChatRoomService {
         return chatRoomRepository.findOneByMember(memberId);
     }
 
+    public ChatRoom findOneByOneOrOther(Long oneId, Long otherId){
+        return chatRoomRepository.findOneByOneOrOther(oneId, otherId);
+
+    }
     public List<ChatRoom> findAll(){
         return chatRoomRepository.findAll();
     }

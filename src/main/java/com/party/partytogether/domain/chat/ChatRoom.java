@@ -28,7 +28,7 @@ public class ChatRoom {
     private Member other;
 
 
-    @OneToMany(mappedBy = "chatRoom")
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChatMessage> messages = new ArrayList<>();
 
     //==생성 메서드==//

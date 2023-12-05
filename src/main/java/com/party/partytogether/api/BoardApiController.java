@@ -34,7 +34,7 @@ public class BoardApiController {
 
         // 게시글 리스트를 DTO로 변환
         List<BoardDto> collect = boardList.stream()
-                .map(b -> new BoardDto(b.getType(), b.getTitle(), b.getContent(), b.getOpentalk(), b.getTime(), b.getMember().getId(), b.getMember().getNickname()))
+                .map(b -> new BoardDto(b.getId(), b.getType(), b.getTitle(), b.getContent(), b.getOpentalk(), b.getTime(), b.getMember().getId(), b.getMember().getNickname()))
                 .collect(Collectors.toList());
 
         return new Result(collect);
@@ -48,6 +48,13 @@ public class BoardApiController {
         return ResponseEntity.ok("Board save successfully");
     }
 
+    @PostMapping("/api/board/delete")
+    public ResponseEntity<?> boardDelete(@RequestBody BoardDeleteRequest request){
+        boardService.delete(request.boardId);
+
+        return ResponseEntity.ok("delete successfully");
+    }
+
     //==DTO==//
 
     @Data
@@ -59,6 +66,7 @@ public class BoardApiController {
     @Data
     @AllArgsConstructor
     static class BoardDto{
+        private Long boardId;
         private String type;
         private String title;
         private String content;
@@ -82,6 +90,11 @@ public class BoardApiController {
         private String title;
         private String content;
         private String opentalk;
+    }
+
+    @Data
+    static class BoardDeleteRequest{
+        private Long boardId;
     }
 }
 
