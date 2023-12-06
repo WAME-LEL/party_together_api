@@ -20,6 +20,7 @@ public class GuildWarRoomService {
     private final GuildRepository guildRepository;
     private final MemberRepository memberRepository;
 
+    //길드전 방 생성
     @Transactional
     public Integer save(Long guildId, Long memberId){
         Guild guild = guildRepository.findOne(guildId);
@@ -38,6 +39,7 @@ public class GuildWarRoomService {
 
     }
 
+    //길드전 방 퇴장
     @Transactional
     public void roomExit(Long memberId){
         memberRepository.findOne(memberId);
@@ -45,11 +47,13 @@ public class GuildWarRoomService {
         guildWarRoomRepository.delete(room.getId());
     }
 
+    //길드전 방 삭제
     @Transactional
     public void roomDelete(Integer roomNumber){
         guildWarRoomRepository.deleteAllByRoomNumber(roomNumber);
     }
 
+    //길드전 방 참가
     @Transactional
     public void joinRoom(Integer roomNumber, Long memberId){
         Member member = memberRepository.findOne(memberId);
@@ -59,18 +63,22 @@ public class GuildWarRoomService {
         guildWarRoomRepository.save(room);
     }
 
+    //길드전 방 하나 조회
     public GuildWarRoom findOne(Long id){
         return guildWarRoomRepository.findOne(id);
     }
 
+    //길드전 방 번호로 조회
     public GuildWarRoom findOneByRoomNumber(Integer roomNumber){
         return guildWarRoomRepository.findOneByRoomNumber(roomNumber);
     }
 
+    //길드전 방 전체 조회
     public List<GuildWarRoom> findAll(){
         return guildWarRoomRepository.findAll();
     }
 
+    //길드전 방 번호로 조회
     public List<GuildWarRoom> findAllByRoomNumber(Integer roomNumber){
         return guildWarRoomRepository.findAllByRoomNumber(roomNumber);
     }

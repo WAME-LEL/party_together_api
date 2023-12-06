@@ -3,7 +3,6 @@ package com.party.partytogether.api.chat;
 
 import com.party.partytogether.domain.chat.ChatMessage;
 import com.party.partytogether.service.chat.ChatMessageService;
-import com.party.partytogether.service.chat.ChatRoomService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +22,12 @@ public class ChatMessageApiController {
 
     private final ChatMessageService chatMessageService;
 
+    //채팅 메시지 리스트 조회
     @GetMapping("/api/chatMessage")
     public Result chatMessageList(@ModelAttribute ChatMessageListRequest request){
         List<ChatMessage> chatMessageList = chatMessageService.findAllByRoomId(request.roomId);
 
+        // 채팅 메시지 리스트를 DTO로 변환
         List<ChatMessageListResponse> collect = chatMessageList.stream()
                 .map(c -> new ChatMessageListResponse(c.getChatRoom().getId(), c.getSenderId(), c.getReceiverId(), c.getContent() ,c.getTimestamp()))
                 .collect(Collectors.toList());

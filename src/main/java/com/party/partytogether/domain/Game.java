@@ -19,7 +19,7 @@ public class Game {
     @Column(name = "game_id")
     private Long id;
 
-    private String title;
+    private String title;   // 게임 이름
 
 
     //==생성 메서드==//

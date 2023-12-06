@@ -80,7 +80,6 @@ public class GuildApiController {
         List<Guild> guildList = guildService.findAllDESC();
         updateRanking(guildList);
 
-
         return ResponseEntity.ok(request.point + "point add");
     }
 

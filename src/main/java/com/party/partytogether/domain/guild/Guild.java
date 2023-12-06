@@ -21,27 +21,27 @@ public class Guild {
     private Long id;
 
     @Column(columnDefinition = "TEXT")
-    private String name;
+    private String name;    // 길드 이름
 
     @Column(columnDefinition = "TEXT")
-    private String introduce;
+    private String introduce;      // 길드 소개
 
-    private int point;
-    private int ranking;
+    private int point;      // 길드 포인트
+    private int ranking;        // 길드 랭킹
 
     //다대일 관계
     @ManyToOne
     @JoinColumn(name = "game_id")
-    private Game game;
+    private Game game;      // 게임
 
     //일대일 관계
     @OneToOne
     @JoinColumn(name = "leader_id")
-    private Member leader;
+    private Member leader;      // 길드장
 
     //일대다 관계
     @OneToMany(mappedBy = "guild")
-    private List<Member> member = new ArrayList<>();
+    private List<Member> member = new ArrayList<>();    // 길드원
 
     //== 생성 메서드==//
     public static Guild createGuild(String name, String introduce, Game game, Member member){

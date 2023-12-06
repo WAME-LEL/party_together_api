@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 public class MemberGameApiController {
     private final MemberGameService memberGameService;
     private final MemberService memberService;
-    private final GameService gameService;
 
     // 같은 게임을 하고 있는 멤버 조회
     @GetMapping("/api/memberGame")
@@ -52,6 +51,7 @@ public class MemberGameApiController {
             // 좌표가 있으면 거리 계산
             if (user.getLatitude() != null && user.getLongitude() != null &&
                     member.getLatitude() != null && member.getLongitude() != null) {
+                // 거리 계산
                 distance = Member.calculateDistance(
                         Double.valueOf(user.getLatitude()),
                         Double.valueOf(user.getLongitude()),

@@ -17,12 +17,14 @@ import java.util.List;
 public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
 
+    // 채팅 메시지 저장
     public void save(Long senderId, Long receiverId, String content, LocalDateTime timestamp, ChatRoom chatRoom){
         ChatMessage chatMessage = ChatMessage.createChatMessage(senderId, receiverId, content, timestamp, chatRoom);
 
         chatMessageRepository.save(chatMessage);
     }
 
+    // 채팅 메시지 조회
     public List<ChatMessage> findAllByRoomId(Long roomId){
         return chatMessageRepository.findAllByRoomId(roomId);
     }

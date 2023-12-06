@@ -20,6 +20,7 @@ public class ChatRoomApiController {
     private final ChatRoomService chatRoomService;
     private final MemberService memberService;
 
+    //채팅방 생성
     @PostMapping("/api/chatRoom/create")
     public ResponseEntity<?> createChatRoom(@RequestBody CreateChatRoomRequest request){
         String name = memberService.findOne(request.oneId).getNickname() +  " 와 " + memberService.findOne(request.otherId).getNickname() + " 의 방";
@@ -27,10 +28,12 @@ public class ChatRoomApiController {
         return ResponseEntity.ok(roomId);
     }
 
+    //채팅방 리스트 조회
     @GetMapping("/api/chatRoom")
     public Result viewChatRoom(){
         List<ChatRoom> chatRoomList = chatRoomService.findAll();
 
+        // 채팅방 리스트를 DTO로 변환
         List<ChatRoomDto> collect = chatRoomList
                 .stream()
                 .map(c -> new ChatRoomDto(c.getId(), c.getName()))
@@ -40,10 +43,12 @@ public class ChatRoomApiController {
         return new Result(new ViewChatRoomResponse(collect));
     }
 
+    //내(memberId) 채팅방 정보 조회
     @GetMapping("/api/chatRoom/info")
     public ResponseEntity<?> myChatRoomInfo(@ModelAttribute MyChatRoomInfoRequest request){
         List<ChatRoom> chatRoomList = chatRoomService.findOneByMemberId(request.memberId);
 
+        // 채팅방 리스트를 DTO로 변환
         List<MyChatRoomInfoResponse> collect = chatRoomList.stream()
                 .map(cr -> new MyChatRoomInfoResponse(cr.getId(), cr.getName(), cr.getOne().getId(), cr.getOther().getId()))
                 .collect(Collectors.toList());
@@ -54,6 +59,7 @@ public class ChatRoomApiController {
         return ResponseEntity.ok(new Result(collect));
     }
 
+    //내(memberId)와 상대방(otherId)의 채팅방 정보 조회
     @GetMapping("/api/chatRoom/info/us")
     public ResponseEntity<?> ourChatRoomInfo(@ModelAttribute OurChatInfoRequest request){
         try{

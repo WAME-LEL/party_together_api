@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class EventApiController {
     private final EventService eventService;
 
+    // 이벤트 리스트 조회
     @GetMapping("/api/event")
     public Result eventList(){
         List<Event> eventList = eventService.findAll();
@@ -29,6 +30,7 @@ public class EventApiController {
         return new Result(collect);
     }
 
+    // 이벤트 저장
     @PostMapping("/api/event/add")
     public ResponseEntity<?> addEvent(@RequestBody AddEventRequest request){
         eventService.save(request.name, request.url, request.period);

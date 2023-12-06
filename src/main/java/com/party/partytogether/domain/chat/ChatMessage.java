@@ -18,14 +18,14 @@ public class ChatMessage {
 
     private Long senderId; // 보낸 사람 ID
     private Long receiverId; // 받는 사람 ID (선택적, 1대1 채팅의 경우 사용)
-    private String content;
-    private LocalDateTime timestamp;
+    private String content; // 메시지 내용
+    private LocalDateTime timestamp;    // 메시지 보낸 시간
 
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "chat_room_id") // 외래키
-    private ChatRoom chatRoom;
+    private ChatRoom chatRoom;  // 채팅방
 
 
     //==생성 메서드==//

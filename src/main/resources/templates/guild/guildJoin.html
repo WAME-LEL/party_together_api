@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guild Registration Form</title>
+  <!-- 부트스트랩 CSS 추가 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 
-<form id="guildJoin" action="/member/guild/join" method="post">
-  <label for="guildId">길드 ID:</label><br>
-  <input type="text" id="guildId" name="guildId" required><br>
-  <label for="memberId">멤버 ID:</label><br>
-  <input type="text" id="memberId" name="memberId" required><br>
+<div class="container mt-3">
+  <form id="guildJoin" action="/member/guild/join" method="post" class="mb-3">
+    <div class="form-group">
+      <label for="guildId">길드 ID:</label>
+      <input type="text" id="guildId" name="guildId" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="memberId">멤버 ID:</label>
+      <input type="text" id="memberId" name="memberId" class="form-control" required>
+    </div>
 
-  <input type="submit" value="저장">
-</form>
+    <button type="submit" class="btn btn-primary">저장</button>
+  </form>
+</div>
 
+<!-- 부트스트랩 JS 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>

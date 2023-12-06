@@ -1,59 +1,62 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board Page</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
 
 <body>
-<div class="container">
-    <div>
-        <div>
-            <a href="/">home</a>
+<div class="container mt-3">
+    <nav class="nav mb-3">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/board/add" class="nav-link">Board Add</a>
+    </nav>
+
+    <form action="/board" method="get" class="mb-3">
+        <div class="form-group">
+            <label for="keyword">단어:</label>
+            <input type="text" id="keyword" name="keyword" class="form-control">
         </div>
+        <button type="submit" class="btn btn-primary">검색</button>
+    </form>
 
-        <div>
-            <a href="/board/add">board add</a>
-        </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>게시글 ID</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>오픈카톡 링크</th>
+            <th>타입</th>
+            <th>등록 시간</th>
+            <th>액션</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${boardList}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.content}"></td>
+            <td th:text="${board.opentalk}"></td>
+            <td th:text="${board.type}"></td>
+            <td th:text="${board.time}"></td>
+            <td>
+                <form action="/post/delete" th:action="@{/board/{id}/delete (id = ${board.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-        <div>
-            <form action="/board" method="get">
-                <label for="keyword">단어:</label><br>
-                <input type="text" id="keyword" name="keyword"><br>
-                <input type="submit" value="검색">
-            </form>
-        </div>
+<!-- 부트스트랩 JS 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>게시글 ID</th>
-                <th>제목</th>
-                <th>내용</th>
-                <th>오픈카톡 링크</th>
-                <th>타입</th>
-                <th>등록 시간</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="board : ${boardList}">
-                <td th:text="${board.id}"></td>
-                <td th:text="${board.title}"></td>
-                <td th:text="${board.content}"></td>
-                <td th:text="${board.opentalk}"></td>
-                <td th:text="${board.type}"></td>
-                <td th:text="${board.time}"></td>
-
-                <td>
-                    <form action="/post/delete" th:action="@{/board/{id}/delete (id = ${board.id})}" method="post">
-                        <div>
-                            <button type="submit" class="btn btn-primary">delete</button>
-                        </div>
-                    </form>
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div> <!-- /container -->
 </body>
-
 </html>

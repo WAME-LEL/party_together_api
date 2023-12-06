@@ -28,6 +28,7 @@ public class MemberGameService {
 
         Map<Long, List<Game>> sameMemberMap= new HashMap<>();       //key: memberId, value: gameList
 
+        //results를 돌면서 같은 게임을 하는 멤버와 게임을 sameMemberMap에 저장
         for (Tuple result: results) {
             Long otherMemberId = result.get(0, Long.class);
             Long gameId = result.get(1, Long.class);
@@ -38,7 +39,8 @@ public class MemberGameService {
 
         return sameMemberMap;
     }
-    
+
+    //멤버가 가지고 있는 게임 조회
     public List<MemberGame> findAllGameByMember(Long memberId) {
         return memberGameRepository.findAllGameByMember(memberId);
     }
