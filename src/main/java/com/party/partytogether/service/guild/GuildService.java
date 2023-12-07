@@ -26,10 +26,10 @@ public class GuildService {
 
     //길드 등록
     @Transactional
-    public void guildRegistration(String name, String introduce, Long gameId, Long memberId){
+    public void guildRegistration(String name, String introduce, String opentalk, Long gameId, Long memberId){
         Game game = gameRepository.findOne(gameId);
         Member member = memberRepository.findOne(memberId);
-        Guild guild = createGuild(name, introduce, game, member);
+        Guild guild = createGuild(name, introduce, opentalk, game, member);
         guildRepository.save(guild);
 
         member.setGuild(guild);

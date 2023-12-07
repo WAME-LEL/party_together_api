@@ -67,10 +67,11 @@ public class GuildController {
     public String guildRegistration(
             @RequestParam("guildName") String guildName,
             @RequestParam("guildIntroduce") String guildIntroduce ,
+            @RequestParam("opentalk") String opentalk,
             @RequestParam("guildGame") Long guildGame,
             @RequestParam("guildLeader") Long guildLeader){
 
-        guildService.guildRegistration(guildName, guildIntroduce, guildGame, guildLeader);
+        guildService.guildRegistration(guildName, guildIntroduce, opentalk, guildGame, guildLeader);
 
         return "redirect:/guild";
     }

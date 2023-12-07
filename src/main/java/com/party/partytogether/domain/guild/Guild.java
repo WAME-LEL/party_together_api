@@ -26,8 +26,12 @@ public class Guild {
     @Column(columnDefinition = "TEXT")
     private String introduce;      // 길드 소개
 
+    @Column(columnDefinition = "TEXT")
+    private String opentalk;      // 길드 오픈 톡방 링크
+
     private int point;      // 길드 포인트
     private int ranking;        // 길드 랭킹
+
 
     //다대일 관계
     @ManyToOne
@@ -44,10 +48,11 @@ public class Guild {
     private List<Member> member = new ArrayList<>();    // 길드원
 
     //== 생성 메서드==//
-    public static Guild createGuild(String name, String introduce, Game game, Member member){
+    public static Guild createGuild(String name, String introduce, String opentalk, Game game, Member member){
         Guild guild = new Guild();
         guild.setName(name);
         guild.setIntroduce(introduce);
+        guild.setOpentalk(opentalk);
         guild.setPoint(0);
         guild.setGame(game);
         guild.setLeader(member);

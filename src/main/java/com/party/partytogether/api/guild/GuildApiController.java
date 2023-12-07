@@ -44,7 +44,7 @@ public class GuildApiController {
         // 길드 리스트를 DTO로 변환
         List<GuildListDto> collect = guildList.stream()
                 .map(g ->
-                {GuildListDto dto = new GuildListDto(g.getId() ,g.getName(), g.getPoint() ,rankCounter.get(), g.getGame(), g.getMember().size());
+                {GuildListDto dto = new GuildListDto(g.getId() ,g.getName(), g.getOpentalk(), g.getPoint() ,rankCounter.get(), g.getGame(), g.getMember().size());
                     guildService.updateGuildRanking(g.getId(), rankCounter.getAndIncrement());
                     return dto;
                 })
@@ -67,7 +67,7 @@ public class GuildApiController {
     @PostMapping("/api/guild/registration")
     public ResponseEntity<?> guildRegistration(@RequestBody GuildRegistrationRequest request){
 
-        guildService.guildRegistration(request.guildName, request.guildIntroduce, request.guildGame, request.guildLeader);
+        guildService.guildRegistration(request.guildName, request.guildIntroduce, request. opentalk, request.guildGame, request.guildLeader);
 
         return ResponseEntity.ok("guild Registration successfully");
     }
@@ -104,6 +104,7 @@ public class GuildApiController {
         private String guildIntroduce;
         private Long guildGame;
         private Long guildLeader;
+        private String opentalk;
     }
 
     @Data
@@ -132,6 +133,7 @@ public class GuildApiController {
     static class GuildListDto{
         private Long guildId;
         private String guildName;
+        private String opentalk;
         private int point;
         private int guildRanking;
         private Game game;
