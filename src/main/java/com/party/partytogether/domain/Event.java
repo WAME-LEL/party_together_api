@@ -17,9 +17,9 @@ public class Event {
     @Column(name = "event_id")
     private Long id;
 
-    private String name;
-    private String url;
-    private String period;
+    private String name;    // 이벤트 이름
+    private String url;    // 이벤트 링크
+    private String period;  // 이벤트 기간
 
 
     //==생성 메서드==//

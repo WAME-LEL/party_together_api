@@ -20,23 +20,23 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String nickname;
-    private String username;
-    private String password;
-    private Integer birthYear;
+    private String nickname;    // 닉네임
+    private String username;    // 아이디
+    private String password;    // 비밀번호
+    private Integer birthYear;  // 생년
 
-    private String latitude;
-    private String longitude;
+    private String latitude;    // 위도
+    private String longitude;   // 경도
 
     //일대다 관계
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<MemberGame> memberGames = new ArrayList<>();
+    private List<MemberGame> memberGames = new ArrayList<>();   // 게임
 
     //다대일 관계
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "guild_id")
-    private Guild guild;
+    private Guild guild;       // 길드
 
     //== 생성 메서드 ==//
     public static Member createMember(String nickname, String username, String password, Integer birthYear){

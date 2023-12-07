@@ -4,51 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Registration Form</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 
-<div>
-    <a href="/">home</a>
-</div>
-<div>
-    <a href="/member/add">member regist</a>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <div class="container">
+        <a class="navbar-brand" href="/">Home</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/member/add">Member Register</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="container">
-
-    <div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>닉네임</th>
-                <th>ID</th>
-                <th>Password</th>
-                <th>게임 리스트</th>
-                <th>길드</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="member : ${memberList}">
-                <td th:text="${member.id}"></td>
-                <td th:text="${member.nickname}"></td>
-                <td th:text="${member.username}"></td>
-                <td th:text="${member.password}"></td>
-                <td th:text="${member.getMemberGames()}"></td>
-                <td th:text="${member.guild}"></td>
-
-                <td>
-                    <form action="/member/delete" th:action="@{/member/{id}/delete (id = ${member.id})}" method="post">
-                        <div>
-                            <button type="submit" class="btn btn-primary">delete</button>
-                        </div>
-                    </form>
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>닉네임</th>
+            <th>ID</th>
+            <th>Password</th>
+            <th>게임 리스트</th>
+            <th>길드</th>
+            <th>액션</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${memberList}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.nickname}"></td>
+            <td th:text="${member.username}"></td>
+            <td th:text="${member.password}"></td>
+            <td th:text="${member.getMemberGames()}"></td>
+            <td th:text="${member.guild}"></td>
+            <td>
+                <form action="/member/delete" th:action="@{/member/{id}/delete (id = ${member.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div> <!-- /container -->
+
+<!-- 부트스트랩 JS 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>

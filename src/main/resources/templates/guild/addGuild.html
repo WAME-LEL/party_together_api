@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guild Registration Form</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 
-<form id="guildForm" action="/guild/regist" method="post">
-    <label for="guildName">길드 명:</label><br>
-    <input type="text" id="guildName" name="guildName" required><br>
-    <label for="guildIntroduce">길드 소개:</label><br>
-    <input type="text" id="guildIntroduce" name="guildIntroduce" required><br>
-    <label for="guildGame">하는 게임:</label><br>
-    <input type="text" id="guildGame" name="guildGame" required><br>
-    <label for="guildLeader">멤버 id:</label><br>
-    <input type="text" id="guildLeader" name="guildLeader" required><br>
+<div class="container mt-3">
+    <form id="guildForm" action="/guild/regist" method="post" class="mb-3">
+        <div class="form-group">
+            <label for="guildName">길드 명:</label>
+            <input type="text" id="guildName" name="guildName" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="guildIntroduce">길드 소개:</label>
+            <input type="text" id="guildIntroduce" name="guildIntroduce" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="guildGame">하는 게임:</label>
+            <input type="text" id="guildGame" name="guildGame" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="guildLeader">멤버 id:</label>
+            <input type="text" id="guildLeader" name="guildLeader" class="form-control" required>
+        </div>
 
-    <input type="submit" value="저장">
-</form>
+        <button type="submit" class="btn btn-primary">저장</button>
+    </form>
+</div>
 
+<!-- 부트스트랩 JS 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>

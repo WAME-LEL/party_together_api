@@ -24,10 +24,10 @@ import java.time.ZonedDateTime;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private SimpMessagingTemplate simpMessagingTemplate;
     private final ChatMessageService chatMessageService;
     private final ChatRoomService chatRoomService;
 
+    // 공용 메시지 전송
     @MessageMapping("/sendMessage")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(ChatMessage chatMessage) {
@@ -37,7 +37,7 @@ public class ChatController {
         return chatMessage;
     }
 
-    // 메시지 전송
+    // 채팅방으로 메시지 전송
     @MessageMapping("/chat/{roomId}/sendMessage")
     @SendTo("/topic/chat.{roomId}")
     public ChatMessage sendMessage(@DestinationVariable String roomId, ChatMessage chatMessage) {
@@ -60,13 +60,13 @@ public class ChatController {
         return chatMessage;
     }
 
+    // 채팅방 페이지로 이동
     @GetMapping("/chat")
     public String index() {
         return "chat/chat"; // chat.html을 반환
     }
 
     //== DTO ==//
-
     @Data
     @AllArgsConstructor
     static class ChatMessageDto{

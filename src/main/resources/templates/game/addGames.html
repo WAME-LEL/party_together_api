@@ -1,63 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Registration Form</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 
-<div>
-    <a href="/board">board</a>
+<div class="container mt-3">
+    <!-- 네비게이션 링크 -->
+    <nav class="nav mb-3">
+        <a href="/board" class="nav-link">Board</a>
+        <a href="/member" class="nav-link">Member</a>
+        <a href="/guild" class="nav-link">Guild</a>
+    </nav>
+
+    <!-- 게임 등록 폼 -->
+    <form id="gameForm" action="/game/regist" method="post" class="mb-3">
+        <div class="form-group">
+            <label for="gameTitle">게임 제목:</label>
+            <input type="text" id="gameTitle" name="gameTitle" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">저장</button>
+    </form>
+
+    <!-- 게임 리스트 테이블 -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>게임 ID</th>
+            <th>제목</th>
+            <th>액션</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${gameList}">
+            <td th:text="${game.id}"></td>
+            <td th:text="${game.title}"></td>
+            <td>
+                <form action="/post/delete" th:action="@{/game/{id}/delete (id = ${game.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-<div>
-    <a href="/member">member</a>
-</div>
-
-<div>
-    <a href="/guild">guild</a>
-</div>
-
-<form id="gameForm" action="/game/regist" method="post">
-    <label for="gameTitle">게임 제목:</label><br>
-    <input type="text" id="gameTitle" name="gameTitle" required><br>
-    <input type="submit" value="저장">
-</form>
-
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>게임 ID</th>
-        <th>제목</th>
-
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="game : ${gameList}">
-        <td th:text="${game.id}"></td>
-        <td th:text="${game.title}"></td>
-
-        <td>
-            <form action="/post/delete" th:action="@{/game/{id}/delete (id = ${game.id})}" method="post">
-                <div>
-                    <button type="submit" class="btn btn-primary">delete</button>
-                </div>
-            </form>
-
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
-
-<script>
-    // 여기에 JavaScript 코드를 추가할 수 있습니다.
-    // 예를 들어, form 제출 시 추가적인 검증을 하거나,
-    // AJAX 요청으로 form을 제출할 수 있습니다.
-</script>
+<!-- 부트스트랩 JS 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>

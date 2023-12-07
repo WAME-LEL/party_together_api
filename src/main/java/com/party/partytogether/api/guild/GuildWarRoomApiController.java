@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:8081")
 public class GuildWarRoomApiController {
     private final GuildWarRoomService guildWarRoomService;
-    private final MemberService memberService;
 
+    // 길드전 방 생성
     @PostMapping("/api/guildWar/add")
     public ResponseEntity<?> AddGuildWarRoom(@RequestBody AddGuildWarRoomRequest request){
         System.out.println("request = " + request);
@@ -31,6 +31,7 @@ public class GuildWarRoomApiController {
         return ResponseEntity.ok(new Result(new AddGuildWarRoomResponse(roomNumber)));
     }
 
+    // 길드전 방 입장
     @PostMapping("/api/guildWar")
     public ResponseEntity<?> entranceRoom(@RequestBody EntranceRoomRequest request){
         try{
@@ -44,6 +45,7 @@ public class GuildWarRoomApiController {
 
     }
 
+    // 길드전 방 정보 조회
     @GetMapping("/api/guildWar")
     public ResponseEntity<?> roomInfo(@ModelAttribute RoomInfoRequest request){
         try{
@@ -54,15 +56,17 @@ public class GuildWarRoomApiController {
                     .map(r -> new RoomInfoResponse(r.getGuild().getId(), r.getGuild().getName(), r.getMember().getNickname()))
                     .collect(Collectors.groupingBy(RoomInfoResponse::getGuildId));
 
+            //Iterator를 사용하여 Map의 key값을 가져옴
             Iterator<Long> iterator = collect.keySet().iterator();
 
             List<RoomInfoResponse> FirstRoomInfoResponse = collect.getOrDefault(iterator.next(), Collections.emptyList());
             //같은 길드전 방에 2개의 길드가 있다면 실행
             if(iterator.hasNext()){
                 List<RoomInfoResponse> SecondRoomInfoResponse = collect.getOrDefault(iterator.next(), Collections.emptyList());
+
                 return ResponseEntity.ok(new Result(new TeamDivide(FirstRoomInfoResponse, SecondRoomInfoResponse)));
             }
-
+            // 같은 길드전 방에 1개의 길드만 있다면 두번째는 빈 리스트로 반환
             return ResponseEntity.ok(new Result(new TeamDivide(FirstRoomInfoResponse, Collections.emptyList())));
 
 
@@ -73,18 +77,13 @@ public class GuildWarRoomApiController {
 
     }
 
+    // 길드전 방 퇴장
     @PostMapping("/api/guildWar/exit")
     public ResponseEntity<?> roomExit(@RequestBody RoomExitRequest request){
         guildWarRoomService.roomExit(request.memberId);
 
         return ResponseEntity.ok("exit");
     }
-
-//    @PostMapping("/api/guildWar/delete")
-//    public ResponseEntity<?> roomDelete(@RequestBody RoomDeleteRequest request){
-//
-//    }
-
 
     //==DTO==//
 

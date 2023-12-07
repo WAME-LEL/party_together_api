@@ -60,6 +60,7 @@ public class BoardApiController {
         return ResponseEntity.ok("Board save successfully");
     }
 
+    // 게시글 삭제
     @PostMapping("/api/board/delete")
     public ResponseEntity<?> boardDelete(@RequestBody BoardDeleteRequest request){
         boardService.delete(request.boardId);

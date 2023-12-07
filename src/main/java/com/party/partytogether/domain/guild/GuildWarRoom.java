@@ -16,15 +16,15 @@ public class GuildWarRoom {
     @Column(name = "guildWarRoom_id")
     private Long Id;
 
-    private Integer roomNumber;
+    private Integer roomNumber;     // 방 번호
 
     @ManyToOne
     @JoinColumn(name = "guild_id")
-    private Guild guild;
+    private Guild guild;        //  길드
 
     @OneToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member member;  // 길드원
 
 
     //==생성 메서드==//

@@ -18,6 +18,7 @@ public class NotificationApiController {
 
     private final NotificationService notificationService;
 
+    // 알림 전송
     @PostMapping("/api/notification/send")
     public ResponseEntity<?> sendNotification(@RequestBody NotificationRequest request) {
         notificationService.sendNotification(request.getMemberId(), request.getMessage());
@@ -25,6 +26,7 @@ public class NotificationApiController {
     }
 
 
+    //==DTO==//
     @Data
     static class NotificationRequest {
         private Long memberId;

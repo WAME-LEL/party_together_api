@@ -18,6 +18,7 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final MemberRepository memberRepository;
 
+    // 채팅방 생성
     public Long createChatRoom(String name, Long oneId, Long otherId){
         Member one = memberRepository.findOne(oneId);
         Member other = memberRepository.findOne(otherId);
@@ -27,18 +28,23 @@ public class ChatRoomService {
         return save.getId();
     }
 
+    // 채팅방 하나 조회
     public ChatRoom findOne(Long roomId){
         return chatRoomRepository.findOne(roomId);
     }
 
+    // 회원ID로 채팅방 조회
     public List<ChatRoom> findOneByMemberId(Long memberId){
         return chatRoomRepository.findOneByMember(memberId);
     }
 
+    // 자신의ID와 상대방ID 로 채팅방 조회
     public ChatRoom findOneByOneOrOther(Long oneId, Long otherId){
         return chatRoomRepository.findOneByOneOrOther(oneId, otherId);
 
     }
+
+    // 채팅방 전체 조회
     public List<ChatRoom> findAll(){
         return chatRoomRepository.findAll();
     }

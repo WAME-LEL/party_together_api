@@ -21,12 +21,12 @@ public class MemberGame {
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member member;  // 회원
 
     //다대일 관계
     @ManyToOne
     @JoinColumn(name = "game_id")
-    private Game game;
+    private Game game;  // 게임
 
     //==생성 메서드==//
     public static MemberGame creatMemberGame(Member member, Game game){
