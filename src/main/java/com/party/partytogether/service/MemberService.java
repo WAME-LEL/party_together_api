@@ -63,7 +63,9 @@ public class MemberService {
         member.setGuild(guild);
     }
 
+
     //회원 위치 설정
+    @Transactional
     public void memberLocation(Long memberId, String latitude, String longitude){
         Member member = memberRepository.findOne(memberId);
 

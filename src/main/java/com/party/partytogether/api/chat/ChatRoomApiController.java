@@ -58,6 +58,7 @@ public class ChatRoomApiController {
     public ResponseEntity<?> ourChatRoomInfo(@ModelAttribute OurChatInfoRequest request){
         try{
             ChatRoom chatRoom = chatRoomService.findOneByOneOrOther(request.oneId, request.otherId);
+            
             return ResponseEntity.ok(chatRoom.getId());
 
         }catch(Exception e){

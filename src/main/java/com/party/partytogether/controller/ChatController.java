@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:8081")
@@ -29,7 +31,8 @@ public class ChatController {
     @MessageMapping("/sendMessage")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(ChatMessage chatMessage) {
-        chatMessage.setTimestamp(LocalDateTime.now());
+        LocalDateTime timestamp = LocalDateTime.now().plusHours(9);
+        chatMessage.setTimestamp(timestamp);
 
         return chatMessage;
     }
@@ -39,10 +42,10 @@ public class ChatController {
     @SendTo("/topic/chat.{roomId}")
     public ChatMessage sendMessage(@DestinationVariable String roomId, ChatMessage chatMessage) {
         // 메시지 처리 로직
-        LocalDateTime nowTime = LocalDateTime.now();
-        chatMessage.setTimestamp(nowTime);
+        LocalDateTime timestamp = LocalDateTime.now().plusHours(9);
+        chatMessage.setTimestamp(timestamp);
         ChatRoom room = chatRoomService.findOne(Long.parseLong(roomId));
-        chatMessageService.save(chatMessage.getSenderId(), chatMessage.getReceiverId(), chatMessage.getContent(), nowTime, room);
+        chatMessageService.save(chatMessage.getSenderId(), chatMessage.getReceiverId(), chatMessage.getContent(), timestamp, room);
 
 
         return chatMessage;
