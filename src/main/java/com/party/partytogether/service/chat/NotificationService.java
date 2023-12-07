@@ -1,4 +1,4 @@
-package com.party.partytogether.service;
+package com.party.partytogether.service.chat;
 
 
 import lombok.RequiredArgsConstructor;

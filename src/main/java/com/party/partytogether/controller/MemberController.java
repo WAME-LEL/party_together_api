@@ -1,8 +1,8 @@
 package com.party.partytogether.controller;
 
 
-import com.party.partytogether.domain.Member;
-import com.party.partytogether.service.MemberService;
+import com.party.partytogether.domain.member.Member;
+import com.party.partytogether.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

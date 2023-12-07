@@ -3,10 +3,10 @@ package com.party.partytogether.service.guild;
 
 import com.party.partytogether.domain.Game;
 import com.party.partytogether.domain.guild.Guild;
-import com.party.partytogether.domain.Member;
+import com.party.partytogether.domain.member.Member;
 import com.party.partytogether.repository.GameRepository;
 import com.party.partytogether.repository.guild.GuildRepository;
-import com.party.partytogether.repository.MemberRepository;
+import com.party.partytogether.repository.member.MemberRepository;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

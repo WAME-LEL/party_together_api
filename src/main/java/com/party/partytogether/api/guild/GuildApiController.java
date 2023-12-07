@@ -3,9 +3,9 @@ package com.party.partytogether.api.guild;
 
 import com.party.partytogether.domain.Game;
 import com.party.partytogether.domain.guild.Guild;
-import com.party.partytogether.domain.Member;
+import com.party.partytogether.domain.member.Member;
 import com.party.partytogether.service.guild.GuildService;
-import com.party.partytogether.service.MemberService;
+import com.party.partytogether.service.member.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -3,7 +3,6 @@ package com.party.partytogether.api.guild;
 
 import com.party.partytogether.domain.guild.GuildWarRoom;
 import com.party.partytogether.service.guild.GuildWarRoomService;
-import com.party.partytogether.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

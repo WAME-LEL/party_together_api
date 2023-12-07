@@ -1,11 +1,10 @@
-package com.party.partytogether.api;
+package com.party.partytogether.api.member;
 
 
 import com.party.partytogether.domain.Game;
-import com.party.partytogether.domain.Member;
-import com.party.partytogether.service.GameService;
-import com.party.partytogether.service.MemberGameService;
-import com.party.partytogether.service.MemberService;
+import com.party.partytogether.domain.member.Member;
+import com.party.partytogether.service.member.MemberGameService;
+import com.party.partytogether.service.member.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

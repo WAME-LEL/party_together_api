@@ -1,4 +1,4 @@
-package com.party.partytogether.domain;
+package com.party.partytogether.domain.member;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

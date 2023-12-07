@@ -2,7 +2,7 @@ package com.party.partytogether.api.chat;
 
 
 import com.party.partytogether.domain.chat.ChatRoom;
-import com.party.partytogether.service.MemberService;
+import com.party.partytogether.service.member.MemberService;
 import com.party.partytogether.service.chat.ChatRoomService;
 import lombok.AllArgsConstructor;
 import lombok.Data;

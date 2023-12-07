@@ -2,9 +2,9 @@ package com.party.partytogether.service;
 
 
 import com.party.partytogether.domain.Board;
-import com.party.partytogether.domain.Member;
+import com.party.partytogether.domain.member.Member;
 import com.party.partytogether.repository.BoardRepository;
-import com.party.partytogether.repository.MemberRepository;
+import com.party.partytogether.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

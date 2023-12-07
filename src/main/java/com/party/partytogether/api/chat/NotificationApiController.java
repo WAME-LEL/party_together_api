@@ -1,11 +1,10 @@
-package com.party.partytogether.api;
+package com.party.partytogether.api.chat;
 
 
-import com.party.partytogether.service.NotificationService;
+import com.party.partytogether.service.chat.NotificationService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

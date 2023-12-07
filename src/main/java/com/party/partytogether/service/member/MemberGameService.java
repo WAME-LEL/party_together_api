@@ -1,10 +1,10 @@
-package com.party.partytogether.service;
+package com.party.partytogether.service.member;
 
 
 import com.party.partytogether.domain.Game;
-import com.party.partytogether.domain.MemberGame;
+import com.party.partytogether.domain.member.MemberGame;
 import com.party.partytogether.repository.GameRepository;
-import com.party.partytogether.repository.MemberGameRepository;
+import com.party.partytogether.repository.member.MemberGameRepository;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

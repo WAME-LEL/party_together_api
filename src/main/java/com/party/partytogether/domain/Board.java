@@ -1,6 +1,7 @@
 package com.party.partytogether.domain;
 
 
+import com.party.partytogether.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

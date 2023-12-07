@@ -1,7 +1,6 @@
-package com.party.partytogether.repository;
+package com.party.partytogether.repository.member;
 
-import com.party.partytogether.domain.Member;
-import com.party.partytogether.domain.MemberGame;
+import com.party.partytogether.domain.member.MemberGame;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;

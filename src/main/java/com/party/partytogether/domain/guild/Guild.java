@@ -2,7 +2,7 @@ package com.party.partytogether.domain.guild;
 
 
 import com.party.partytogether.domain.Game;
-import com.party.partytogether.domain.Member;
+import com.party.partytogether.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
